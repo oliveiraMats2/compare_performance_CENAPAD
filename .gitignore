@@ -1,0 +1,12 @@
+# Generated but kept out of git (as requested)
+spack/
+run/
+logs/
+analysis/
+results/
+figures/
+report.md
+.venv/
+
+# Image is built on the cluster
+*.sif
