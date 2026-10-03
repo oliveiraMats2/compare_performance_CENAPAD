@@ -8,5 +8,6 @@ figures/
 report.md
 .venv/
 
-# Image is built on the cluster
+# Container image and the Docker tarball used to build it
 *.sif
+*.tar

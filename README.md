@@ -1,12 +1,13 @@
 # MO652: nativo (Spack) vs contêiner (HPCCM + Apptainer) no CENAPAD
 
 osu_bw e osu_latency entre 2 nós CPU (1 processo por nó), InfiniBand HDR100.
-Versões iguais nos dois ambientes: MPICH 5.0.2 (ch4:ucx), UCX 1.20.1, OSU 7.5.2, GCC.
+Versões iguais nos dois ambientes: MPICH 5.0.2 (ch4:ucx), UCX 1.20.1, OSU 7.5.2, rdma-core 48.0, GCC.
 
 | Arquivo | O que é |
 |---|---|
 | `container/osu_mpich.py` | receita HPCCM |
-| `container/osu_mpich.def` | definição Apptainer gerada pela receita |
+| `container/osu_mpich.def` | definição Singularity/Apptainer gerada pela receita |
+| `container/Dockerfile` | Dockerfile gerado pela receita (usado para construir a imagem) |
 | `spack/spack.yaml` | ambiente Spack (o `spack.lock` sai do cluster) |
 | `run/osu.pbs` | job PBS: checagem de IB + 3 repetições de cada teste, nos dois cenários |
 | `analysis/plot.py` | logs -> `results/*.npy`, `figures/*.png`, `results/summary.txt` |
@@ -36,53 +37,57 @@ spack concretize -f && spack install -j 8
 # registro para reproduzir
 spack spec -l > spack/spack_spec.txt
 spack find -lv >> spack/spack_spec.txt
-{ mpichversion; ucx_info -v; ofed_info -s; gcc --version | head -1; } > spack/versions.txt
+{ mpichversion; ucx_info -v; rpm -q rdma-core; gcc --version | head -1; } > spack/versions.txt
 ```
 
 `spack.lock` fica em `spack/`. Para reproduzir: `spack env create x spack/spack.lock && spack -e x install`.
 
-## 2. Imagem (MOFED igual ao do cluster)
+## 2. Imagem (rdma-core igual ao do cluster)
+
+Os nós do CENAPAD não têm MOFED: a InfiniBand usa o rdma-core 48.0 do AlmaLinux
+(`rpm -q rdma-core`). A receita compila esse mesmo rdma-core 48.0 no Ubuntu 24.04.
+
+Gerar `.def` e `Dockerfile` (precisa só do hpccm):
 
 ```bash
-ofed_info -s        # ex.: MLNX_OFED_LINUX-24.10-3.2.5.0 -> use 24.10-3.2.5.0
+python3 -m venv ~/hpccm-venv && ~/hpccm-venv/bin/pip install hpccm
+~/hpccm-venv/bin/hpccm --recipe container/osu_mpich.py --format singularity > container/osu_mpich.def
+~/hpccm-venv/bin/hpccm --recipe container/osu_mpich.py --format docker      > container/Dockerfile
 ```
 
-Gerar o `.def` (laptop ou cluster, precisa só do hpccm):
+O cluster tem Singularity 3.8.5 sem `--fakeroot` para o usuário, então a imagem é
+construída com Docker numa máquina x86_64 (no Mac M1/M2/M3, `--platform linux/amd64`):
 
 ```bash
-uvx --from hpccm hpccm --recipe container/osu_mpich.py --format singularity \
-    --userarg mofed=<versao do ofed_info> > container/osu_mpich.def
+docker build --platform linux/amd64 -t osu -f container/Dockerfile container/
+docker save osu -o osu.tar
+scp osu.tar <usuario>@<login-cenapad>:~/compare_performance_CENAPAD/container/
 ```
 
-Construir no cluster:
+No cluster:
 
 ```bash
-apptainer build --fakeroot container/osu.sif container/osu_mpich.def
-apptainer exec container/osu.sif mpichversion      # tem que dar 5.0.2
-apptainer exec container/osu.sif ucx_info -v       # 1.20.1
-apptainer exec container/osu.sif which osu_bw
+singularity build container/osu.sif docker-archive://container/osu.tar
+singularity exec container/osu.sif mpichversion     # 5.0.2
+singularity exec container/osu.sif ucx_info -v      # 1.20.1
+singularity exec container/osu.sif which osu_bw
 ```
 
-Sem `--fakeroot` no cluster: `--format docker` num x86_64 com Docker,
-`docker build -t osu . && docker save osu -o osu.tar`, depois
-`apptainer build container/osu.sif docker-archive://osu.tar` no cluster.
+## 3. Rodar (PBS, fila `paralela`)
 
-Atenção: MOFED só tem pacote para Ubuntu 24.04 a partir da 24.04-x. Se o cluster
-estiver em 5.x/23.x, use a 24.x mais antiga (a userspace nova funciona com driver antigo).
-
-## 3. Rodar (PBS)
+`paralela` é a única fila com mais de um nó (mínimo 2 nós / 256 CPUs): o job reserva os
+2 nós inteiros e lança 1 processo MPI por nó.
 
 ```bash
 cd ~/compare_performance_CENAPAD
-qsub -q <fila> run/osu.pbs                          # tudo
-qsub -q <fila> -v SCENARIOS=container run/osu.pbs   # só um cenário
+qsub run/osu.pbs                          # tudo
+qsub -v SCENARIOS=container run/osu.pbs   # só um cenário
 qstat -u $USER
 tail -1 logs/ib_check.log     # ib_lines > 0 e tcp_lines = 0 -> passou pela InfiniBand
 ```
 
 Logs: `logs/{native,container}/{osu_bw,osu_latency}_run{1,2,3}.log`.
 Resubmeter retoma: logs completos são pulados, só roda o que falta.
-Descomente `# module load apptainer` no `run/osu.pbs` se o cluster exigir.
 
 ## 4. Gráficos e números (pode rodar com resultados parciais)
 

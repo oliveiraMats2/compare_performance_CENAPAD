@@ -15,23 +15,24 @@
 # ║  ⠀⠀⠀⢻⣿⣦⡓⢿⣿⣿⡆⣿⣿⣿⣿⢃⣶⡸⣿⣿⣿⡇⠀⠉⠉⠁⠀⠀⠀⠀                                            ║
 # ║  ⠀⠀⠀⠈⣿⣿⣿⡆⠀⠀⠀⣿⣿⣿⡟⣼⡿⠁⢹⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀                                            ║
 # ╚══════════════════════════════════════════════════════════════════════════════════════╝
-"""HPCCM recipe: Ubuntu 24.04 + MOFED userspace + UCX + MPICH (ch4:ucx) + OSU, GCC.
+"""HPCCM recipe: Ubuntu 24.04 + rdma-core + UCX + MPICH (ch4:ucx) + OSU, GCC.
 
-Versions match the host Spack env (spack/spack.yaml). MOFED must match the cluster:
-    hpccm --recipe container/osu_mpich.py --format singularity \
-          --userarg mofed=24.10-3.2.5.0 > container/osu_mpich.def
+Versions match the host Spack env (spack/spack.yaml).
+    hpccm --recipe container/osu_mpich.py --format singularity > container/osu_mpich.def
+    hpccm --recipe container/osu_mpich.py --format docker      > container/Dockerfile
 """
-# MLNX_OFED ships ubuntu24.04 packages only from 24.04 on; if `ofed_info -s` is older,
-# use the oldest 24.x (userspace libs stay compatible with an older kernel driver).
-mofed = USERARG.get('mofed', '24.10-3.2.5.0')
+# The CENAPAD nodes have no MLNX_OFED: their InfiniBand userspace is the AlmaLinux inbox
+# rdma-core 48.0 (`rpm -q rdma-core`). Ubuntu 24.04 ships 50.0, so build the same 48.0.
+rdma_v = USERARG.get('rdma', '48.0')
 mpich_v, ucx_v, osu_v = '5.0.2', '1.20.1', '7.5.2'
 
 Stage0 += baseimage(image='ubuntu:24.04')
 compiler = gnu()
 Stage0 += compiler
-Stage0 += mlnx_ofed(version=mofed, oslabel='ubuntu24.04')
-# ofed=True -> --with-verbs --with-rdmacm; same default flags as Spack's ucx package
-Stage0 += ucx(version=ucx_v, cuda=False, ofed=True, prefix='/usr/local/ucx',
+Stage0 += packages(ospackages=['cmake'])
+Stage0 += rdma_core(version=rdma_v, prefix='/usr/local/rdma-core', toolchain=compiler.toolchain)
+# ofed=<path> -> --with-verbs=<path> --with-rdmacm=<path>; same default flags as Spack's ucx
+Stage0 += ucx(version=ucx_v, cuda=False, ofed='/usr/local/rdma-core', prefix='/usr/local/ucx',
               toolchain=compiler.toolchain)
 Stage0 += mpich(version=mpich_v, prefix='/usr/local/mpich', toolchain=compiler.toolchain,
                 configure_opts=['--with-device=ch4:ucx', '--with-ucx=/usr/local/ucx'])
