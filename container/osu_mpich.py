@@ -24,7 +24,7 @@ Versions match the host Spack env (spack/spack.yaml).
 # The CENAPAD nodes have no MLNX_OFED: their InfiniBand userspace is the AlmaLinux inbox
 # rdma-core 48.0 (`rpm -q rdma-core`). Ubuntu 24.04 ships 50.0, so build the same 48.0.
 rdma_v = USERARG.get('rdma', '48.0')
-mpich_v, ucx_v, osu_v = '5.0.2', '1.20.1', '7.5.2'
+mpich_v, ucx_v, osu_v = '5.0.1', '1.20.1', '7.5.2'
 
 Stage0 += baseimage(image='ubuntu:24.04')
 compiler = gnu()

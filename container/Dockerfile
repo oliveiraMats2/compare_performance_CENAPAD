@@ -57,7 +57,7 @@ ENV CPATH=/usr/local/ucx/include:$CPATH \
     LIBRARY_PATH=/usr/local/ucx/lib:$LIBRARY_PATH \
     PATH=/usr/local/ucx/bin:$PATH
 
-# MPICH version 5.0.2
+# MPICH version 5.0.1
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         file \
@@ -68,12 +68,12 @@ RUN apt-get update -y && \
         tar \
         wget && \
     rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://www.mpich.org/static/downloads/5.0.2/mpich-5.0.2.tar.gz && \
-    mkdir -p /var/tmp && tar -x -f /var/tmp/mpich-5.0.2.tar.gz -C /var/tmp -z && \
-    cd /var/tmp/mpich-5.0.2 &&  CC=gcc CXX=g++ F77=gfortran FC=gfortran ./configure --prefix=/usr/local/mpich --with-device=ch4:ucx --with-ucx=/usr/local/ucx && \
+RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://www.mpich.org/static/downloads/5.0.1/mpich-5.0.1.tar.gz && \
+    mkdir -p /var/tmp && tar -x -f /var/tmp/mpich-5.0.1.tar.gz -C /var/tmp -z && \
+    cd /var/tmp/mpich-5.0.1 &&  CC=gcc CXX=g++ F77=gfortran FC=gfortran ./configure --prefix=/usr/local/mpich --with-device=ch4:ucx --with-ucx=/usr/local/ucx && \
     make -j$(nproc) && \
     make -j$(nproc) install && \
-    rm -rf /var/tmp/mpich-5.0.2 /var/tmp/mpich-5.0.2.tar.gz
+    rm -rf /var/tmp/mpich-5.0.1 /var/tmp/mpich-5.0.1.tar.gz
 ENV LD_LIBRARY_PATH=/usr/local/mpich/lib:$LD_LIBRARY_PATH \
     PATH=/usr/local/mpich/bin:$PATH
 
