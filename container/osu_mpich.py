@@ -29,7 +29,7 @@ mpich_v, ucx_v, osu_v = '5.0.2', '1.20.1', '7.5.2'
 Stage0 += baseimage(image='ubuntu:24.04')
 compiler = gnu()
 Stage0 += compiler
-Stage0 += packages(ospackages=['cmake'])
+Stage0 += packages(ospackages=['ca-certificates', 'cmake'])
 Stage0 += rdma_core(version=rdma_v, prefix='/usr/local/rdma-core', toolchain=compiler.toolchain)
 # ofed=<path> -> --with-verbs=<path> --with-rdmacm=<path>; same default flags as Spack's ucx
 Stage0 += ucx(version=ucx_v, cuda=False, ofed='/usr/local/rdma-core', prefix='/usr/local/ucx',

@@ -10,6 +10,7 @@ RUN apt-get update -y && \
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        ca-certificates \
         cmake && \
     rm -rf /var/lib/apt/lists/*
 
