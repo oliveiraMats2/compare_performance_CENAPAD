@@ -1,0 +1,89 @@
+FROM ubuntu:24.04
+
+# GNU compiler
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        g++ \
+        gcc \
+        gfortran && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        cmake && \
+    rm -rf /var/lib/apt/lists/*
+
+# RDMA Core version 48.0
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        libnl-3-dev \
+        libnl-route-3-dev \
+        libudev-dev \
+        make \
+        pandoc \
+        pkg-config \
+        python3-docutils \
+        wget && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://github.com/linux-rdma/rdma-core/archive/v48.0.tar.gz && \
+    mkdir -p /var/tmp && tar -x -f /var/tmp/v48.0.tar.gz -C /var/tmp -z && \
+    mkdir -p /var/tmp/rdma-core-48.0/build && cd /var/tmp/rdma-core-48.0/build && CC=gcc CXX=g++ F77=gfortran F90=gfortran FC=gfortran cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rdma-core /var/tmp/rdma-core-48.0 && \
+    cmake --build /var/tmp/rdma-core-48.0/build --target all -- -j$(nproc) && \
+    cmake --build /var/tmp/rdma-core-48.0/build --target install -- -j$(nproc) && \
+    rm -rf /var/tmp/rdma-core-48.0 /var/tmp/v48.0.tar.gz
+ENV CPATH=/usr/local/rdma-core/include:$CPATH \
+    LD_LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LD_LIBRARY_PATH \
+    LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LIBRARY_PATH \
+    PATH=/usr/local/rdma-core/bin:$PATH
+
+# UCX version 1.20.1
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        binutils-dev \
+        file \
+        libnuma-dev \
+        make \
+        wget && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://github.com/openucx/ucx/releases/download/v1.20.1/ucx-1.20.1.tar.gz && \
+    mkdir -p /var/tmp && tar -x -f /var/tmp/ucx-1.20.1.tar.gz -C /var/tmp -z && \
+    cd /var/tmp/ucx-1.20.1 &&  CC=gcc CXX=g++ F77=gfortran F90=gfortran FC=gfortran ./configure --prefix=/usr/local/ucx --disable-assertions --disable-debug --disable-doxygen-doc --disable-logging --disable-params-check --enable-optimizations --with-rdmacm=/usr/local/rdma-core --with-verbs=/usr/local/rdma-core --without-cuda && \
+    make -j$(nproc) && \
+    make -j$(nproc) install && \
+    rm -rf /var/tmp/ucx-1.20.1 /var/tmp/ucx-1.20.1.tar.gz
+ENV CPATH=/usr/local/ucx/include:$CPATH \
+    LD_LIBRARY_PATH=/usr/local/ucx/lib:$LD_LIBRARY_PATH \
+    LIBRARY_PATH=/usr/local/ucx/lib:$LIBRARY_PATH \
+    PATH=/usr/local/ucx/bin:$PATH
+
+# MPICH version 5.0.2
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        file \
+        gzip \
+        make \
+        openssh-client \
+        perl \
+        tar \
+        wget && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://www.mpich.org/static/downloads/5.0.2/mpich-5.0.2.tar.gz && \
+    mkdir -p /var/tmp && tar -x -f /var/tmp/mpich-5.0.2.tar.gz -C /var/tmp -z && \
+    cd /var/tmp/mpich-5.0.2 &&  CC=gcc CXX=g++ F77=gfortran FC=gfortran ./configure --prefix=/usr/local/mpich --with-device=ch4:ucx --with-ucx=/usr/local/ucx && \
+    make -j$(nproc) && \
+    make -j$(nproc) install && \
+    rm -rf /var/tmp/mpich-5.0.2 /var/tmp/mpich-5.0.2.tar.gz
+ENV LD_LIBRARY_PATH=/usr/local/mpich/lib:$LD_LIBRARY_PATH \
+    PATH=/usr/local/mpich/bin:$PATH
+
+# https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz
+RUN mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.5.2.tar.gz && \
+    mkdir -p /var/tmp && tar -x -f /var/tmp/osu-micro-benchmarks-7.5.2.tar.gz -C /var/tmp -z && \
+    cd /var/tmp/osu-micro-benchmarks-7.5.2 &&  CC=mpicc CXX=mpicxx ./configure --prefix=/usr/local/osu && \
+    make -j$(nproc) && \
+    make -j$(nproc) install && \
+    rm -rf /var/tmp/osu-micro-benchmarks-7.5.2 /var/tmp/osu-micro-benchmarks-7.5.2.tar.gz
+
+ENV PATH=/usr/local/osu/libexec/osu-micro-benchmarks/mpi/pt2pt:$PATH
+
+

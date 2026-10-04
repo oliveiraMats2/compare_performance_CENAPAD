@@ -12,30 +12,43 @@ From: ubuntu:24.04
         gfortran
     rm -rf /var/lib/apt/lists/*
 
-# Mellanox OFED version 24.10-3.2.5.0
 %post
     apt-get update -y
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        ca-certificates \
-        gnupg \
+        cmake
+    rm -rf /var/lib/apt/lists/*
+
+# RDMA Core version 48.0
+%post
+    apt-get update -y
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        libnl-3-dev \
+        libnl-route-3-dev \
+        libudev-dev \
+        make \
+        pandoc \
+        pkg-config \
+        python3-docutils \
         wget
     rm -rf /var/lib/apt/lists/*
 %post
-    wget -qO - https://www.mellanox.com/downloads/ofed/RPM-GPG-KEY-Mellanox | apt-key add -
-    mkdir -p /etc/apt/sources.list.d && wget -q -nc -P /etc/apt/sources.list.d https://linux.mellanox.com/public/repo/mlnx_ofed/24.10-3.2.5.0/ubuntu24.04/mellanox_mlnx_ofed.list
-    apt-get update -y
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        ibverbs-providers \
-        ibverbs-utils \
-        libibmad-dev \
-        libibmad5 \
-        libibumad-dev \
-        libibumad3 \
-        libibverbs-dev \
-        libibverbs1 \
-        librdmacm-dev \
-        librdmacm1
-    rm -rf /var/lib/apt/lists/*
+    cd /
+    mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://github.com/linux-rdma/rdma-core/archive/v48.0.tar.gz
+    mkdir -p /var/tmp && tar -x -f /var/tmp/v48.0.tar.gz -C /var/tmp -z
+    mkdir -p /var/tmp/rdma-core-48.0/build && cd /var/tmp/rdma-core-48.0/build && CC=gcc CXX=g++ F77=gfortran F90=gfortran FC=gfortran cmake -DCMAKE_INSTALL_PREFIX=/usr/local/rdma-core /var/tmp/rdma-core-48.0
+    cmake --build /var/tmp/rdma-core-48.0/build --target all -- -j$(nproc)
+    cmake --build /var/tmp/rdma-core-48.0/build --target install -- -j$(nproc)
+    rm -rf /var/tmp/rdma-core-48.0 /var/tmp/v48.0.tar.gz
+%environment
+    export CPATH=/usr/local/rdma-core/include:$CPATH
+    export LD_LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LIBRARY_PATH
+    export PATH=/usr/local/rdma-core/bin:$PATH
+%post
+    export CPATH=/usr/local/rdma-core/include:$CPATH
+    export LD_LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/usr/local/rdma-core/lib:/usr/local/rdma-core/lib64:$LIBRARY_PATH
+    export PATH=/usr/local/rdma-core/bin:$PATH
 
 # UCX version 1.20.1
 %post
@@ -51,7 +64,7 @@ From: ubuntu:24.04
     cd /
     mkdir -p /var/tmp && wget -q -nc -P /var/tmp https://github.com/openucx/ucx/releases/download/v1.20.1/ucx-1.20.1.tar.gz
     mkdir -p /var/tmp && tar -x -f /var/tmp/ucx-1.20.1.tar.gz -C /var/tmp -z
-    cd /var/tmp/ucx-1.20.1 &&  CC=gcc CXX=g++ F77=gfortran F90=gfortran FC=gfortran ./configure --prefix=/usr/local/ucx --disable-assertions --disable-debug --disable-doxygen-doc --disable-logging --disable-params-check --enable-optimizations --with-rdmacm --with-verbs --without-cuda
+    cd /var/tmp/ucx-1.20.1 &&  CC=gcc CXX=g++ F77=gfortran F90=gfortran FC=gfortran ./configure --prefix=/usr/local/ucx --disable-assertions --disable-debug --disable-doxygen-doc --disable-logging --disable-params-check --enable-optimizations --with-rdmacm=/usr/local/rdma-core --with-verbs=/usr/local/rdma-core --without-cuda
     make -j$(nproc)
     make -j$(nproc) install
     rm -rf /var/tmp/ucx-1.20.1 /var/tmp/ucx-1.20.1.tar.gz
