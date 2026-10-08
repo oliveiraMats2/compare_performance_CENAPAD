@@ -1,0 +1,15 @@
+
+# OSU MPI Latency Test v7.5.2
+# Datatype: MPI_CHAR.
+# Size       Avg Latency(us)
+1                       1.65
+2                       1.61
+4                       1.58
+8                       1.56
+16                      1.56
+32                      1.70
+64                      1.85
+128                     1.86
+256                     2.59
+512                     2.61
+1024                    2.87

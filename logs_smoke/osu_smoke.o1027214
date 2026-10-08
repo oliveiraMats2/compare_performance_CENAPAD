@@ -1,0 +1,3 @@
+PASS native: rc_mlx5 visible, latency(1 KiB)=2.87 us, bw(64 KiB)=17484.90 MB/s
+PASS container: rc_mlx5 visible, latency(1 KiB)=2.98 us, bw(64 KiB)=17760.43 MB/s
+SMOKE OK: submit run/osu.pbs

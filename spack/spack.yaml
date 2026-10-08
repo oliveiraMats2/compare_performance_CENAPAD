@@ -1,0 +1,19 @@
+# Native build for osu_bw / osu_latency on CENAPAD-SP (InfiniBand HDR100).
+# spack.lock is produced on the cluster by `spack concretize -f`.
+# rdma-core is built by Spack: the host has only the rdma-core 48.0 runtime libs, without the
+# -devel headers, so UCX built against /usr silently dropped InfiniBand. Spack has no 48.0;
+# 49.0 is the closest (userspace verbs stay compatible with the host kernel driver).
+spack:
+  specs:
+  - osu-micro-benchmarks@7.5.2 %gcc ^mpich@5.0.1 device=ch4 netmod=ucx ^ucx@1.20.1 +verbs +rdmacm +rc +ud +dc +mlx5_dv +cma
+
+  packages:
+    rdma-core:
+      require: "@49.0 ~man_pages ~pyverbs"
+    mpi:
+      require: mpich
+
+  concretizer:
+    unify: true
+
+  view: true

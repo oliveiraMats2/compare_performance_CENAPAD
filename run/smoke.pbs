@@ -1,0 +1,46 @@
+#!/bin/bash -l
+#PBS -N osu_smoke
+#PBS -q testes
+#PBS -l select=1:ncpus=2:mpiprocs=2
+#PBS -l walltime=00:05:00
+#PBS -j oe
+# Quick check before the real job (run/osu.pbs): 1 node, 2 ranks, tiny messages.
+# UCX_TLS=self,rc forbids shared memory, so the 2 ranks talk through the InfiniBand HCA
+# (loopback) even on one node: it fails the same way the 2-node job would.
+# Submit from the repo root: qsub run/smoke.pbs   -> result in osu_smoke.o<jobid>
+
+W=${PBS_O_WORKDIR:-$PWD}; cd "$W"
+. "${SPACK_ROOT:-$HOME/spack}/share/spack/setup-env.sh"
+spack env activate "$W/spack"
+set -u
+
+APPTAINER=$(command -v apptainer || command -v singularity)
+SIF=$W/container/osu.sif
+OSU_PREFIX=$(spack location -i osu-micro-benchmarks)
+OUT=$W/logs_smoke; mkdir -p "$OUT"
+export UCX_NET_DEVICES=mlx5_0:1 UCX_TLS=self,rc
+
+run() {
+  local s=$1 b=$2; shift 2
+  if [ "$s" = native ]; then
+    mpiexec -n 2 -f "$PBS_NODEFILE" "$(find "$OSU_PREFIX" -name "$b" -type f | head -1)" "$@"
+  else
+    mpiexec -n 2 -f "$PBS_NODEFILE" "$APPTAINER" exec "$SIF" "$b" "$@"
+  fi
+}
+
+ok=0
+for s in native container; do
+  if [ "$s" = native ]; then n=$(ucx_info -d | grep -c 'Transport: rc_mlx5')
+  else n=$("$APPTAINER" exec "$SIF" ucx_info -d | grep -c 'Transport: rc_mlx5'); fi
+  run "$s" osu_latency -m 1:1024 -i 200 -x 20 > "$OUT/${s}_latency.log" 2>&1
+  run "$s" osu_bw      -m 1:65536 -i 50 -x 5 > "$OUT/${s}_bw.log" 2>&1
+  lat=$(grep -E '^1024[[:space:]]' "$OUT/${s}_latency.log" | awk '{print $2}')
+  bw=$(grep -E '^65536[[:space:]]' "$OUT/${s}_bw.log" | awk '{print $2}')
+  if [ "$n" -gt 0 ] && [ -n "$lat" ] && [ -n "$bw" ]; then
+    echo "PASS $s: rc_mlx5 visible, latency(1 KiB)=$lat us, bw(64 KiB)=$bw MB/s"
+  else
+    echo "FAIL $s: rc_mlx5 devices=$n latency=${lat:-none} bw=${bw:-none} -> see $OUT/${s}_*.log"; ok=1
+  fi
+done
+[ $ok = 0 ] && echo "SMOKE OK: submit run/osu.pbs" || echo "SMOKE FAILED: do not submit run/osu.pbs"

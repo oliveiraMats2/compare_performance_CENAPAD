@@ -1,0 +1,83 @@
+#!/bin/bash -l
+#PBS -N osu_cmp
+#PBS -q paralela
+#PBS -l select=2:ncpus=128:mpiprocs=1
+#PBS -l place=scatter:exclhost
+#PBS -l walltime=01:00:00
+#PBS -j oe
+# paralela is the only multi-node queue (min 2 nodes / 256 cpus): reserve both nodes whole,
+# but launch 1 MPI rank per node (mpiprocs=1). Submit from the repo root: qsub run/osu.pbs
+# Env overrides: qsub -v "REPS=3,SCENARIOS=container,OSU_ARGS=-m 1:4194304" run/osu.pbs
+# Job stdout/stderr (-j oe) lands in the submit dir as osu_cmp.o<jobid>.
+
+W=${PBS_O_WORKDIR:-$PWD}; cd "$W"
+SPACK_ROOT=${SPACK_ROOT:-$HOME/spack}
+. "$SPACK_ROOT/share/spack/setup-env.sh"   # sourced before set -u (spack scripts touch unset vars)
+spack env activate "$W/spack"
+set -u
+
+APPTAINER=${APPTAINER:-$(command -v apptainer || command -v singularity)}
+SIF=$W/container/osu.sif
+OSU_PREFIX=$(spack location -i osu-micro-benchmarks)
+OSU_ARGS=${OSU_ARGS:-"-m 1:4194304"}
+REPS=${REPS:-3}
+SCENARIOS=${SCENARIOS:-"native container"}
+LOGS=$W/logs; mkdir -p "$LOGS"
+HOSTFILE=$LOGS/hostfile; sort -u "$PBS_NODEFILE" > "$HOSTFILE"
+
+# InfiniBand device for UCX; check the name with `ibv_devinfo` / `ucx_info -d`.
+# Hydra forwards the whole env to remote ranks and Apptainer inherits it, so both scenarios see the same UCX setup.
+export UCX_NET_DEVICES=${UCX_NET_DEVICES:-mlx5_0:1}
+# export UCX_TLS=rc,sm,self   # only if ib_check.log shows UCX falling back to tcp
+
+# run <scenario> <bench> [osu args...] : same mpiexec, same hosts, only the binary differs
+run() {
+  local s=$1 b=$2; shift 2
+  if [ "$s" = native ]; then
+    mpiexec -n 2 -ppn 1 -f "$HOSTFILE" "$(find "$OSU_PREFIX" -name "$b" -type f | head -1)" "$@"
+  else
+    mpiexec -n 2 -ppn 1 -f "$HOSTFILE" "$APPTAINER" exec "$SIF" "$b" "$@"
+  fi
+}
+
+# ---- InfiniBand verification (always both scenarios) ----
+IB=$LOGS/ib_check.log
+echo "[$(date +%T)] IB check -> $IB"
+{
+  echo "# date: $(date -Is)  job: ${PBS_JOBID:-none}"
+  echo "## hosts"; cat "$HOSTFILE"
+  echo "## ibstat / ibv_devinfo per node"
+  mpiexec -n 2 -ppn 1 -f "$HOSTFILE" bash -c 'echo "== $(hostname)"; ibstat 2>/dev/null || ibv_devinfo'
+  echo "## rdma-core (host, no MOFED)"; rpm -q rdma-core libibverbs
+  echo "## rdma-core (container)"; "$APPTAINER" exec "$SIF" sh -c 'ls /usr/local/rdma-core/lib*/libibverbs.so.*'
+  echo "## ucx_info -v (host)"; ucx_info -v
+  echo "## ucx_info -v (container)"; "$APPTAINER" exec "$SIF" ucx_info -v
+  echo "## mpichversion (host)"; mpichversion
+  echo "## mpichversion (container)"; "$APPTAINER" exec "$SIF" mpichversion
+  for s in native container; do
+    echo "## UCX transport probe: $s"
+    UCX_LOG_LEVEL=info UCX_PROTO_INFO=y run "$s" osu_bw -m 1048576:1048576
+  done
+} > "$IB" 2>&1
+echo "# SUMMARY ib_lines(rc|dc|ud_mlx5)=$(grep -cE 'rc_mlx5|dc_mlx5|ud_mlx5' "$IB") tcp_lines=$(grep -c tcp "$IB")" >> "$IB"
+tail -1 "$IB"
+
+# ---- Benchmarks: scenarios interleaved per repetition; finished logs are skipped (resume) ----
+LAST=$(sed -n 's/.*-m *[0-9]*:\([0-9]*\).*/\1/p' <<< "$OSU_ARGS"); LAST=${LAST:-4194304}
+for k in $(seq 1 "$REPS"); do
+  for b in osu_bw osu_latency; do
+    for s in $SCENARIOS; do
+      mkdir -p "$LOGS/$s"; f=$LOGS/$s/${b}_run$k.log
+      if grep -qE "^${LAST}[[:space:]]" "$f" 2>/dev/null; then echo "[skip] run$k $s $b (complete)"; continue; fi
+      echo "[$(date +%T)] run$k/$REPS $s $b"
+      {
+        echo "# date: $(date -Is)"
+        echo "# hosts: $(paste -sd' ' "$HOSTFILE")"
+        echo "# scenario: $s  bench: $b  run: $k  args: $OSU_ARGS"
+        run "$s" "$b" $OSU_ARGS   # unquoted on purpose: split args
+      } > "$f" 2>&1
+      grep -qE "^${LAST}[[:space:]]" "$f" || echo "   WARN: $f incomplete, resubmit to retry"
+    done
+  done
+done
+echo "[$(date +%T)] done, logs in $LOGS"

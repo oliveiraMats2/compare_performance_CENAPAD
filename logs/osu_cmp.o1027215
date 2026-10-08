@@ -1,0 +1,15 @@
+[00:12:32] IB check -> /home/lovelace/proj/proj1163/m203656/compare_performance_CENAPAD/logs/ib_check.log
+# SUMMARY ib_lines(rc|dc|ud_mlx5)=244 tcp_lines=0
+[00:12:48] run1/3 native osu_bw
+[00:12:50] run1/3 container osu_bw
+[00:12:53] run1/3 native osu_latency
+[00:12:56] run1/3 container osu_latency
+[00:13:00] run2/3 native osu_bw
+[00:13:02] run2/3 container osu_bw
+[00:13:04] run2/3 native osu_latency
+[00:13:08] run2/3 container osu_latency
+[00:13:11] run3/3 native osu_bw
+[00:13:13] run3/3 container osu_bw
+[00:13:16] run3/3 native osu_latency
+[00:13:19] run3/3 container osu_latency
+[00:13:23] done, logs in /home/lovelace/proj/proj1163/m203656/compare_performance_CENAPAD/logs

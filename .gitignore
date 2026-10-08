@@ -1,13 +1,20 @@
-# Generated but kept out of git (as requested)
-spack/
-run/
-logs/
-analysis/
-results/
-figures/
-report.md
+# Local Python env and old draft notes (the delivered report is report/relatorio.tex)
 .venv/
+report.md
 
 # Container image and the Docker tarball used to build it
 *.sif
 *.tar
+
+# PBS stdout of superseded or failed jobs (the final run's stdout is in logs/)
+/osu_cmp.o*
+/osu_smoke.o*
+
+# LaTeX build output, only inside report/ (a global *.log would hide the benchmark logs)
+report/*.pdf
+report/*.aux
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz

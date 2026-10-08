@@ -1,7 +1,8 @@
 # MO652: nativo (Spack) vs contêiner (HPCCM + Apptainer) no CENAPAD
 
 osu_bw e osu_latency entre 2 nós CPU (1 processo por nó), InfiniBand HDR100.
-Versões iguais nos dois ambientes: MPICH 5.0.2 (ch4:ucx), UCX 1.20.1, OSU 7.5.2, rdma-core 48.0, GCC.
+Versões iguais nos dois ambientes: MPICH 5.0.1 (ch4:ucx), UCX 1.20.1, OSU 7.5.2, GCC.
+rdma-core: 48.0 no contêiner (igual ao host) e 49.0 no Spack (o Spack não tem 48.0).
 
 | Arquivo | O que é |
 |---|---|
@@ -27,12 +28,11 @@ rsync -av --exclude .git ./ <usuario>@<login-cenapad>:~/compare_performance_CENA
 ```bash
 git clone --depth=2 --branch v1.2.2 https://github.com/spack/spack.git ~/spack
 . ~/spack/share/spack/setup-env.sh
-spack repo update                      # traz mpich@5.0.2 se o builtin estiver velho
-spack info mpich | grep 5.0.2          # confere
+spack repo update                      # traz mpich@5.0.1 se o builtin estiver velho
+spack info mpich | grep 5.0.1          # confere
 spack compiler find
 cd ~/compare_performance_CENAPAD
 spack env activate ./spack
-spack external find --not-buildable rdma-core   # usa os verbs do MOFED do host
 spack concretize -f && spack install -j 8
 # registro para reproduzir
 spack spec -l > spack/spack_spec.txt
@@ -40,7 +40,18 @@ spack find -lv >> spack/spack_spec.txt
 { mpichversion; ucx_info -v; rpm -q rdma-core; gcc --version | head -1; } > spack/versions.txt
 ```
 
-`spack.lock` fica em `spack/`. Para reproduzir: `spack env create x spack/spack.lock && spack -e x install`.
+`spack.lock` fica em `spack/`. Para reproduzir exatamente a mesma instalação (Spack v1.2.2,
+commit `3e19345`, mesmos hashes do `spack/spack_spec.txt`):
+
+```bash
+git clone --depth=2 --branch v1.2.2 https://github.com/spack/spack.git ~/spack
+. ~/spack/share/spack/setup-env.sh
+spack repo update
+spack compiler find
+spack env create osu spack/spack.lock
+spack env activate osu
+spack install -j 8
+```
 
 ## 2. Imagem (rdma-core igual ao do cluster)
 
@@ -68,7 +79,7 @@ No cluster:
 
 ```bash
 singularity build container/osu.sif docker-archive://container/osu.tar
-singularity exec container/osu.sif mpichversion     # 5.0.2
+singularity exec container/osu.sif mpichversion     # 5.0.1
 singularity exec container/osu.sif ucx_info -v      # 1.20.1
 singularity exec container/osu.sif which osu_bw
 ```

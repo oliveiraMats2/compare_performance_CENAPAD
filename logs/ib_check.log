@@ -1,0 +1,820 @@
+# date: 2026-10-06T00:12:32-03:00  job: 1027215.ada
+## hosts
+adano07
+adano21
+## ibstat / ibv_devinfo per node
+== adano21
+CA 'mlx5_0'
+	CA type: MT4123
+	Number of ports: 1
+	Firmware version: 20.43.3608
+	Hardware version: 0
+	Node GUID: 0xb8cef603000495a0
+	System image GUID: 0xb8cef603000495a0
+	Port 1:
+		State: Active
+		Physical state: LinkUp
+		Rate: 100
+		Base lid: 42
+		LMC: 0
+		SM lid: 1
+		Capability mask: 0xa659e848
+		Port GUID: 0xb8cef603000495a0
+		Link layer: InfiniBand
+Warning: Permanently added the ED25519 host key for IP address '172.26.0.7' to the list of known hosts.
+Attaching 1759706 to 1027215.ada
+== adano07
+CA 'mlx5_0'
+	CA type: MT4123
+	Number of ports: 1
+	Firmware version: 20.43.3608
+	Hardware version: 0
+	Node GUID: 0x043f720300e1a050
+	System image GUID: 0x043f720300e1a050
+	Port 1:
+		State: Active
+		Physical state: LinkUp
+		Rate: 100
+		Base lid: 71
+		LMC: 0
+		SM lid: 1
+		Capability mask: 0xa659e848
+		Port GUID: 0x043f720300e1a050
+		Link layer: InfiniBand
+## rdma-core (host, no MOFED)
+rdma-core-48.0-1.el8.x86_64
+libibverbs-48.0-1.el8.x86_64
+## rdma-core (container)
+/usr/local/rdma-core/lib/libibverbs.so.1
+/usr/local/rdma-core/lib/libibverbs.so.1.14.48.0
+## ucx_info -v (host)
+# Library version: 1.20.1
+# Library path: /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi/lib/libucs.so.0
+# API headers version: 1.20.1
+# Git branch '', revision d8e50df
+# Configured with: --disable-logging --disable-debug --disable-assertions --disable-params-check --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi --without-go --disable-doxygen-doc --disable-assertions --enable-compiler-opt=3 --without-java --enable-shared --enable-static --disable-logging --disable-mt --with-openmp --enable-optimizations --disable-params-check --disable-gtest --with-pic --without-cuda --enable-cma --with-dc --without-dm --without-gdrcopy --without-ib-hw-tm --without-knem --with-rc --with-ud --without-xpmem --with-mlx5 --without-fuse3 --without-bfd --with-rdmacm=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/rdma-core-49.0-ag45bxzfb74ui3xxa6bvjeztbfmurwvf --with-verbs=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/rdma-core-49.0-ag45bxzfb74ui3xxa6bvjeztbfmurwvf --with-avx --without-rocm
+## ucx_info -v (container)
+# Library version: 1.20.1
+# Library path: /usr/local/ucx/lib/libucs.so.0
+# API headers version: 1.20.1
+# Git branch '<unknown>', revision 0000000
+# Configured with: --prefix=/usr/local/ucx --disable-assertions --disable-debug --disable-doxygen-doc --disable-logging --disable-params-check --enable-optimizations --with-rdmacm=/usr/local/rdma-core --with-verbs=/usr/local/rdma-core --without-cuda
+## mpichversion (host)
+MPICH Version:      5.0.1
+MPICH Release date: Fri Apr 10 09:45:31 AM CDT 2026
+MPICH ABI:          18:1:6
+MPICH Device:       ch4:ucx
+MPICH configure:    --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/mpich-5.0.1-amarjcr2tsrjbsc4v7s3kvx7uumjhryz --disable-maintainer-mode --disable-silent-rules --enable-shared --with-pm=hydra --enable-romio --without-ibverbs --enable-wrapper-rpath=yes --with-yaksa=embedded --without-ze --with-hwloc=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/hwloc-2.13.0-2kcetpwpyrvg7mdpdu36kmo76a7dstga --enable-fortran --with-slurm=no --without-cuda --without-hip --with-device=ch4:ucx --with-ucx=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi --enable-libxml2 --with-datatype-engine=auto
+MPICH CC:           /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/gcc     -O2
+MPICH CXX:          /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/g++   -O2
+MPICH F77:          /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/gfortran   -O2
+MPICH FC:           /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/gfortran   -O2
+MPICH features:     threadcomm
+
+## mpichversion (container)
+MPICH Version:      5.0.1
+MPICH Release date: Fri Apr 10 09:45:31 AM CDT 2026
+MPICH ABI:          18:1:6
+MPICH Device:       ch4:ucx
+MPICH configure:    --prefix=/usr/local/mpich --with-device=ch4:ucx --with-ucx=/usr/local/ucx
+MPICH CC:           gcc     -O2
+MPICH CXX:          g++   -O2
+MPICH F77:          gfortran   -O2
+MPICH FC:           gfortran   -O2
+MPICH features:     threadcomm
+
+## UCX transport probe: native
+Attaching 1759790 to 1027215.ada
+[1791256365.597488] [adano21:2459195:0]     ucp_context.c:2463 UCX  INFO  Version 1.20.1 (loaded from /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi/lib/libucp.so.0)
+[1791256366.066460] [adano21:2459195:0]          parser.c:2366 UCX  INFO  UCX_* env variables: UCX_LOG_LEVEL=info UCX_PROTO_INFO=y UCX_NET_DEVICES=mlx5_0:1
+[1791256366.066802] [adano21:2459195:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 self cfg#0 tag(self/memory rc_mlx5/mlx5_0:1 cma/memory)  rma(self/memory)  am(self/memory rc_mlx5/mlx5_0:1 cma/memory)
+[1791256366.071711] [adano21:2459195:0]   +--------------------------+-------------------------------------------------------------+
+[1791256366.071720] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put* from host memory to host    |
+[1791256366.071721] [adano21:2459195:0]   +--------------------------+------------------------------------------+------------------+
+[1791256366.071722] [adano21:2459195:0]   |                 0..12610 | short                                    | self/memory      |
+[1791256366.071723] [adano21:2459195:0]   |               12611..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256366.071724] [adano21:2459195:0]   +--------------------------+------------------------------------------+------------------+
+[1791256366.071850] [adano21:2459195:0]   +--------------------------+------------------------------------------------------------------------------+
+[1791256366.071852] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256366.071852] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256366.071853] [adano21:2459195:0]   |                 0..44944 | short                                                     | self/memory      |
+[1791256366.071854] [adano21:2459195:0]   |               44945..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.071855] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256366.071925] [adano21:2459195:0]   +--------------------------+--------------------------------------------------------------------+
+[1791256366.071927] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256366.071927] [adano21:2459195:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256366.071928] [adano21:2459195:0]   |                  0..1101 | short                                           | self/memory      |
+[1791256366.071929] [adano21:2459195:0]   |                1102..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.071930] [adano21:2459195:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256366.072204] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.072206] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send* from host memory                                              |
+[1791256366.072207] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072208] [adano21:2459195:0]   |                  0..2284 | eager short                                   | self/memory                                   |
+[1791256366.072209] [adano21:2459195:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.072210] [adano21:2459195:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.072210] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072330] [adano21:2459195:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.072332] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(fast-completion) from host memory                         |
+[1791256366.072333] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.072334] [adano21:2459195:0]   |                  0..8184 | eager short                               | self/memory                                   |
+[1791256366.072335] [adano21:2459195:0]   |             8185..262143 | multi-frag eager copy-in copy-out         | self/memory                                   |
+[1791256366.072336] [adano21:2459195:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.072337] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.072675] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.072677] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(multi) from host memory                                       |
+[1791256366.072678] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072679] [adano21:2459195:0]   |                  0..2434 | eager short                                   | self/memory                                   |
+[1791256366.072679] [adano21:2459195:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.072680] [adano21:2459195:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.072681] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072795] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.072796] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* from host memory                                               |
+[1791256366.072797] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072798] [adano21:2459195:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256366.072799] [adano21:2459195:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.072800] [adano21:2459195:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.072800] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.072892] [adano21:2459195:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.072894] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(fast-completion) from host memory                          |
+[1791256366.072895] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.072895] [adano21:2459195:0]   |                  0..8184 | short                                     | self/memory                                   |
+[1791256366.072896] [adano21:2459195:0]   |             8185..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256366.072897] [adano21:2459195:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.072898] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.073030] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.073032] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(multi) from host memory                                        |
+[1791256366.073033] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.073033] [adano21:2459195:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256366.073034] [adano21:2459195:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.073035] [adano21:2459195:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.073036] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.073141] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.073143] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag from host memory                               |
+[1791256366.073144] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.073145] [adano21:2459195:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256366.073145] [adano21:2459195:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.073146] [adano21:2459195:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.073147] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.073236] [adano21:2459195:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.073238] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(fast-completion) from host memory          |
+[1791256366.073239] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.073239] [adano21:2459195:0]   |                  0..8176 | short                                     | self/memory                                   |
+[1791256366.073240] [adano21:2459195:0]   |             8177..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256366.073241] [adano21:2459195:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.073242] [adano21:2459195:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.073380] [adano21:2459195:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.073382] [adano21:2459195:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(multi) from host memory                        |
+[1791256366.073383] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.073383] [adano21:2459195:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256366.073384] [adano21:2459195:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.073385] [adano21:2459195:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.073386] [adano21:2459195:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.085561] [adano07:1759852:0]     ucp_context.c:2463 UCX  INFO  Version 1.20.1 (loaded from /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi/lib/libucp.so.0)
+[1791256366.180454] [adano07:1759852:0]          parser.c:2366 UCX  INFO  UCX_* env variables: UCX_LOG_LEVEL=info UCX_PROTO_INFO=y UCX_NET_DEVICES=mlx5_0:1
+[1791256366.180809] [adano07:1759852:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 self cfg#0 tag(self/memory rc_mlx5/mlx5_0:1 cma/memory)  rma(self/memory)  am(self/memory rc_mlx5/mlx5_0:1 cma/memory)
+[1791256366.185714] [adano07:1759852:0]   +--------------------------+-------------------------------------------------------------+
+[1791256366.185725] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put* from host memory to host    |
+[1791256366.185726] [adano07:1759852:0]   +--------------------------+------------------------------------------+------------------+
+[1791256366.185726] [adano07:1759852:0]   |                 0..12610 | short                                    | self/memory      |
+[1791256366.185727] [adano07:1759852:0]   |               12611..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256366.185728] [adano07:1759852:0]   +--------------------------+------------------------------------------+------------------+
+[1791256366.185881] [adano07:1759852:0]   +--------------------------+------------------------------------------------------------------------------+
+[1791256366.185883] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256366.185884] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256366.185885] [adano07:1759852:0]   |                 0..44944 | short                                                     | self/memory      |
+[1791256366.185885] [adano07:1759852:0]   |               44945..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.185886] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256366.185959] [adano07:1759852:0]   +--------------------------+--------------------------------------------------------------------+
+[1791256366.185961] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256366.185962] [adano07:1759852:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256366.185962] [adano07:1759852:0]   |                  0..1101 | short                                           | self/memory      |
+[1791256366.185963] [adano07:1759852:0]   |                1102..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.185964] [adano07:1759852:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256366.186264] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.186267] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send* from host memory                                              |
+[1791256366.186268] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186269] [adano07:1759852:0]   |                  0..2284 | eager short                                   | self/memory                                   |
+[1791256366.186270] [adano07:1759852:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.186271] [adano07:1759852:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.186271] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186369] [adano07:1759852:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.186371] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(fast-completion) from host memory                         |
+[1791256366.186372] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.186373] [adano07:1759852:0]   |                  0..8184 | eager short                               | self/memory                                   |
+[1791256366.186374] [adano07:1759852:0]   |             8185..262143 | multi-frag eager copy-in copy-out         | self/memory                                   |
+[1791256366.186375] [adano07:1759852:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.186375] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.186703] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.186705] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(multi) from host memory                                       |
+[1791256366.186706] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186707] [adano07:1759852:0]   |                  0..2434 | eager short                                   | self/memory                                   |
+[1791256366.186708] [adano07:1759852:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.186709] [adano07:1759852:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.186710] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186815] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.186817] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* from host memory                                               |
+[1791256366.186818] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186818] [adano07:1759852:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256366.186819] [adano07:1759852:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.186820] [adano07:1759852:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.186821] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.186908] [adano07:1759852:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.186910] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(fast-completion) from host memory                          |
+[1791256366.186911] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.186912] [adano07:1759852:0]   |                  0..8184 | short                                     | self/memory                                   |
+[1791256366.186912] [adano07:1759852:0]   |             8185..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256366.186913] [adano07:1759852:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.186914] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.187036] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.187038] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(multi) from host memory                                        |
+[1791256366.187039] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.187040] [adano07:1759852:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256366.187040] [adano07:1759852:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.187041] [adano07:1759852:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.187042] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.187142] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.187144] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag from host memory                               |
+[1791256366.187145] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.187145] [adano07:1759852:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256366.187146] [adano07:1759852:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.187147] [adano07:1759852:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.187148] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.187247] [adano07:1759852:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256366.187249] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(fast-completion) from host memory          |
+[1791256366.187250] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.187251] [adano07:1759852:0]   |                  0..8176 | short                                     | self/memory                                   |
+[1791256366.187252] [adano07:1759852:0]   |             8177..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256366.187253] [adano07:1759852:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.187253] [adano07:1759852:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256366.187373] [adano07:1759852:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256366.187375] [adano07:1759852:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(multi) from host memory                        |
+[1791256366.187376] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.187376] [adano07:1759852:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256366.187377] [adano07:1759852:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256366.187378] [adano07:1759852:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256366.187379] [adano07:1759852:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256366.192211] [adano21:2459195:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 inter-node cfg#1 tag(rc_mlx5/mlx5_0:1)  rma(rc_mlx5/mlx5_0:1)  am(rc_mlx5/mlx5_0:1)
+[1791256366.192240] [adano07:1759852:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 inter-node cfg#1 tag(rc_mlx5/mlx5_0:1)  rma(rc_mlx5/mlx5_0:1)  am(rc_mlx5/mlx5_0:1)
+[1791256366.192339] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------------------+
+[1791256366.192341] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put* from host memory to host    |
+[1791256366.192342] [adano21:2459195:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256366.192343] [adano21:2459195:0]   |                         0..220 | short                                    | rc_mlx5/mlx5_0:1 |
+[1791256366.192344] [adano21:2459195:0]   |                       221..477 | copy-in                                  | rc_mlx5/mlx5_0:1 |
+[1791256366.192345] [adano21:2459195:0]   |                       478..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256366.192345] [adano21:2459195:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256366.192369] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------------------+
+[1791256366.192370] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put* from host memory to host    |
+[1791256366.192371] [adano07:1759852:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256366.192409] [adano21:2459195:0]   +--------------------------------+------------------------------------------------------------------------------+
+[1791256366.192411] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256366.192412] [adano21:2459195:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256366.192372] [adano07:1759852:0]   |                         0..220 | short                                    | rc_mlx5/mlx5_0:1 |
+[1791256366.192373] [adano07:1759852:0]   |                       221..477 | copy-in                                  | rc_mlx5/mlx5_0:1 |
+[1791256366.192374] [adano07:1759852:0]   |                       478..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256366.192375] [adano07:1759852:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256366.192412] [adano21:2459195:0]   |                         0..220 | short                                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.192413] [adano21:2459195:0]   |                     221..18457 | copy-in                                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.192414] [adano21:2459195:0]   |                     18458..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.192415] [adano21:2459195:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256366.192439] [adano07:1759852:0]   +--------------------------------+------------------------------------------------------------------------------+
+[1791256366.192441] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256366.192442] [adano07:1759852:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256366.192443] [adano07:1759852:0]   |                         0..220 | short                                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.192490] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256366.192491] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256366.192492] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.192493] [adano21:2459195:0]   |                         0..220 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256366.192494] [adano21:2459195:0]   |                       221..477 | copy-in                                         | rc_mlx5/mlx5_0:1 |
+[1791256366.192495] [adano21:2459195:0]   |                       478..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.192495] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.192443] [adano07:1759852:0]   |                     221..18457 | copy-in                                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.192444] [adano07:1759852:0]   |                     18458..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.192445] [adano07:1759852:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256366.192545] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256366.192547] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256366.192548] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.192549] [adano07:1759852:0]   |                         0..220 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256366.192550] [adano07:1759852:0]   |                       221..477 | copy-in                                         | rc_mlx5/mlx5_0:1 |
+[1791256366.192551] [adano07:1759852:0]   |                       478..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.192552] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.192799] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.192801] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send* from host memory             |
+[1791256366.192802] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.192803] [adano21:2459195:0]   |                         0..226 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256366.192803] [adano21:2459195:0]   |                       227..404 | eager copy-in copy-out                    | rc_mlx5/mlx5_0:1 |
+[1791256366.192804] [adano21:2459195:0]   |                      405..8246 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256366.192805] [adano21:2459195:0]   |                    8247..39637 | multi-frag eager zero-copy copy-out       | rc_mlx5/mlx5_0:1 |
+[1791256366.192805] [adano21:2459195:0]   |                     39638..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.192807] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.192853] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.192856] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send* from host memory             |
+[1791256366.192857] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.192858] [adano07:1759852:0]   |                         0..226 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256366.192858] [adano07:1759852:0]   |                       227..404 | eager copy-in copy-out                    | rc_mlx5/mlx5_0:1 |
+[1791256366.192859] [adano07:1759852:0]   |                      405..8246 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256366.192860] [adano07:1759852:0]   |                    8247..39637 | multi-frag eager zero-copy copy-out       | rc_mlx5/mlx5_0:1 |
+[1791256366.192860] [adano07:1759852:0]   |                     39638..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.192861] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.192969] [adano21:2459195:0]   +--------------------------------+----------------------------------------------------------------------+
+[1791256366.192971] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(fast-completion) from host memory    |
+[1791256366.192972] [adano21:2459195:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256366.192972] [adano21:2459195:0]   |                         0..226 | eager short                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.192973] [adano21:2459195:0]   |                      227..8246 | eager copy-in copy-out                            | rc_mlx5/mlx5_0:1 |
+[1791256366.192974] [adano21:2459195:0]   |                    8247..18447 | multi-frag eager copy-in copy-out                 | rc_mlx5/mlx5_0:1 |
+[1791256366.192975] [adano21:2459195:0]   |                  18448..262143 | multi-frag eager zero-copy copy-out               | rc_mlx5/mlx5_0:1 |
+[1791256366.192975] [adano21:2459195:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote         | rc_mlx5/mlx5_0:1 |
+[1791256366.192976] [adano21:2459195:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256366.193012] [adano07:1759852:0]   +--------------------------------+----------------------------------------------------------------------+
+[1791256366.193014] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(fast-completion) from host memory    |
+[1791256366.193015] [adano07:1759852:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256366.193016] [adano07:1759852:0]   |                         0..226 | eager short                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.193017] [adano07:1759852:0]   |                      227..8246 | eager copy-in copy-out                            | rc_mlx5/mlx5_0:1 |
+[1791256366.193018] [adano07:1759852:0]   |                    8247..18447 | multi-frag eager copy-in copy-out                 | rc_mlx5/mlx5_0:1 |
+[1791256366.193018] [adano07:1759852:0]   |                  18448..262143 | multi-frag eager zero-copy copy-out               | rc_mlx5/mlx5_0:1 |
+[1791256366.193019] [adano07:1759852:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote         | rc_mlx5/mlx5_0:1 |
+[1791256366.193020] [adano07:1759852:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256366.193328] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193331] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(multi) from host memory      |
+[1791256366.193332] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193333] [adano21:2459195:0]   |                         0..226 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256366.193333] [adano21:2459195:0]   |                       227..440 | eager copy-in copy-out                    | rc_mlx5/mlx5_0:1 |
+[1791256366.193334] [adano21:2459195:0]   |                      441..4066 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256366.193335] [adano21:2459195:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193335] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193365] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193367] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(multi) from host memory      |
+[1791256366.193368] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193369] [adano07:1759852:0]   |                         0..226 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256366.193370] [adano07:1759852:0]   |                       227..440 | eager copy-in copy-out                    | rc_mlx5/mlx5_0:1 |
+[1791256366.193371] [adano07:1759852:0]   |                      441..4066 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256366.193372] [adano07:1759852:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193372] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193505] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193507] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* from host memory              |
+[1791256366.193508] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193509] [adano21:2459195:0]   |                         0..226 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.193510] [adano21:2459195:0]   |                       227..404 | copy-in                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.193510] [adano21:2459195:0]   |                      405..8246 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.193511] [adano21:2459195:0]   |                    8247..39624 | multi-frag zero-copy                      | rc_mlx5/mlx5_0:1 |
+[1791256366.193512] [adano21:2459195:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193512] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193548] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193550] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* from host memory              |
+[1791256366.193551] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193552] [adano07:1759852:0]   |                         0..226 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.193553] [adano07:1759852:0]   |                       227..404 | copy-in                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.193554] [adano07:1759852:0]   |                      405..8246 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.193555] [adano07:1759852:0]   |                    8247..39624 | multi-frag zero-copy                      | rc_mlx5/mlx5_0:1 |
+[1791256366.193555] [adano07:1759852:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193556] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193677] [adano21:2459195:0]   +--------------------------------+---------------------------------------------------------------------+
+[1791256366.193678] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(fast-completion) from host memory    |
+[1791256366.193679] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256366.193680] [adano21:2459195:0]   |                         0..226 | short                                            | rc_mlx5/mlx5_0:1 |
+[1791256366.193681] [adano21:2459195:0]   |                      227..8246 | copy-in                                          | rc_mlx5/mlx5_0:1 |
+[1791256366.193682] [adano21:2459195:0]   |                    8247..18453 | multi-frag copy-in                               | rc_mlx5/mlx5_0:1 |
+[1791256366.193683] [adano21:2459195:0]   |                  18454..262143 | multi-frag zero-copy                             | rc_mlx5/mlx5_0:1 |
+[1791256366.193683] [adano21:2459195:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote        | rc_mlx5/mlx5_0:1 |
+[1791256366.193684] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256366.193697] [adano07:1759852:0]   +--------------------------------+---------------------------------------------------------------------+
+[1791256366.193699] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(fast-completion) from host memory    |
+[1791256366.193699] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256366.193700] [adano07:1759852:0]   |                         0..226 | short                                            | rc_mlx5/mlx5_0:1 |
+[1791256366.193701] [adano07:1759852:0]   |                      227..8246 | copy-in                                          | rc_mlx5/mlx5_0:1 |
+[1791256366.193702] [adano07:1759852:0]   |                    8247..18453 | multi-frag copy-in                               | rc_mlx5/mlx5_0:1 |
+[1791256366.193703] [adano07:1759852:0]   |                  18454..262143 | multi-frag zero-copy                             | rc_mlx5/mlx5_0:1 |
+[1791256366.193703] [adano07:1759852:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote        | rc_mlx5/mlx5_0:1 |
+[1791256366.193704] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256366.193867] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193869] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(multi) from host memory       |
+[1791256366.193869] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193870] [adano21:2459195:0]   |                         0..226 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.193871] [adano21:2459195:0]   |                       227..440 | copy-in                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.193872] [adano21:2459195:0]   |                      441..4066 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.193873] [adano21:2459195:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193873] [adano21:2459195:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193882] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256366.193885] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(multi) from host memory       |
+[1791256366.193885] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.193886] [adano07:1759852:0]   |                         0..226 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256366.193887] [adano07:1759852:0]   |                       227..440 | copy-in                                   | rc_mlx5/mlx5_0:1 |
+[1791256366.193888] [adano07:1759852:0]   |                      441..4066 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256366.193889] [adano07:1759852:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256366.193889] [adano07:1759852:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256366.194042] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256366.194043] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag from host memory    |
+[1791256366.194044] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.194045] [adano21:2459195:0]   |                         0..218 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256366.194046] [adano21:2459195:0]   |                       219..404 | copy-in                                         | rc_mlx5/mlx5_0:1 |
+[1791256366.194046] [adano21:2459195:0]   |                      405..8238 | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.194047] [adano21:2459195:0]   |                    8239..39624 | multi-frag zero-copy                            | rc_mlx5/mlx5_0:1 |
+[1791256366.194048] [adano21:2459195:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote       | rc_mlx5/mlx5_0:1 |
+[1791256366.194049] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.194047] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256366.194049] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag from host memory    |
+[1791256366.194049] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.194050] [adano07:1759852:0]   |                         0..218 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256366.194051] [adano07:1759852:0]   |                       219..404 | copy-in                                         | rc_mlx5/mlx5_0:1 |
+[1791256366.194052] [adano07:1759852:0]   |                      405..8238 | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256366.194052] [adano07:1759852:0]   |                    8239..39624 | multi-frag zero-copy                            | rc_mlx5/mlx5_0:1 |
+[1791256366.194053] [adano07:1759852:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote       | rc_mlx5/mlx5_0:1 |
+[1791256366.194054] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256366.194195] [adano21:2459195:0]   +--------------------------------+-------------------------------------------------------------------------------------+
+[1791256366.194196] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(fast-completion) from host memory    |
+[1791256366.194197] [adano21:2459195:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256366.194198] [adano21:2459195:0]   |                         0..218 | short                                                            | rc_mlx5/mlx5_0:1 |
+[1791256366.194199] [adano21:2459195:0]   |                      219..8238 | copy-in                                                          | rc_mlx5/mlx5_0:1 |
+[1791256366.194200] [adano21:2459195:0]   |                    8239..18453 | multi-frag copy-in                                               | rc_mlx5/mlx5_0:1 |
+[1791256366.194200] [adano21:2459195:0]   |                  18454..262143 | multi-frag zero-copy                                             | rc_mlx5/mlx5_0:1 |
+[1791256366.194201] [adano21:2459195:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote                        | rc_mlx5/mlx5_0:1 |
+[1791256366.194202] [adano21:2459195:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256366.194196] [adano07:1759852:0]   +--------------------------------+-------------------------------------------------------------------------------------+
+[1791256366.194198] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(fast-completion) from host memory    |
+[1791256366.194198] [adano07:1759852:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256366.194199] [adano07:1759852:0]   |                         0..218 | short                                                            | rc_mlx5/mlx5_0:1 |
+[1791256366.194200] [adano07:1759852:0]   |                      219..8238 | copy-in                                                          | rc_mlx5/mlx5_0:1 |
+[1791256366.194201] [adano07:1759852:0]   |                    8239..18453 | multi-frag copy-in                                               | rc_mlx5/mlx5_0:1 |
+[1791256366.194202] [adano07:1759852:0]   |                  18454..262143 | multi-frag zero-copy                                             | rc_mlx5/mlx5_0:1 |
+[1791256366.194203] [adano07:1759852:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote                        | rc_mlx5/mlx5_0:1 |
+[1791256366.194203] [adano07:1759852:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256366.194389] [adano21:2459195:0]   +--------------------------------+---------------------------------------------------------------------------+
+[1791256366.194391] [adano21:2459195:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(multi) from host memory    |
+[1791256366.194392] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256366.194393] [adano21:2459195:0]   |                         0..218 | short                                                  | rc_mlx5/mlx5_0:1 |
+[1791256366.194394] [adano21:2459195:0]   |                       219..440 | copy-in                                                | rc_mlx5/mlx5_0:1 |
+[1791256366.194394] [adano21:2459195:0]   |                      441..4066 | zero-copy                                              | rc_mlx5/mlx5_0:1 |
+[1791256366.194395] [adano21:2459195:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote              | rc_mlx5/mlx5_0:1 |
+[1791256366.194396] [adano21:2459195:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256366.194388] [adano07:1759852:0]   +--------------------------------+---------------------------------------------------------------------------+
+[1791256366.194389] [adano07:1759852:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(multi) from host memory    |
+[1791256366.194390] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256366.194391] [adano07:1759852:0]   |                         0..218 | short                                                  | rc_mlx5/mlx5_0:1 |
+[1791256366.194392] [adano07:1759852:0]   |                       219..440 | copy-in                                                | rc_mlx5/mlx5_0:1 |
+[1791256366.194393] [adano07:1759852:0]   |                      441..4066 | zero-copy                                              | rc_mlx5/mlx5_0:1 |
+[1791256366.194393] [adano07:1759852:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote              | rc_mlx5/mlx5_0:1 |
+[1791256366.194394] [adano07:1759852:0]   +--------------------------------+--------------------------------------------------------+------------------+
+
+# OSU MPI Bandwidth Test v7.5.2
+# Datatype: MPI_CHAR.
+# Size      Bandwidth (MB/s)
+1048576             12323.28
+## UCX transport probe: container
+Attaching 1759860 to 1027215.ada
+[1791256367.477335] [adano21:2459224:0]     ucp_context.c:2463 UCX  INFO  Version 1.20.1 (loaded from /usr/local/ucx/lib/libucp.so.0)
+[1791256367.644702] [adano21:2459224:0]          parser.c:2364 UCX  INFO  UCX_* env variables: UCX_LOG_LEVEL=info UCX_NET_DEVICES=mlx5_0:1 UCX_PROTO_INFO=y
+[1791256367.646243] [adano21:2459224:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 self cfg#0 tag(self/memory rc_mlx5/mlx5_0:1 cma/memory)  rma(self/memory)  am(self/memory rc_mlx5/mlx5_0:1 cma/memory)
+[1791256367.651118] [adano21:2459224:0]   +--------------------------+-------------------------------------------------------------+
+[1791256367.651134] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put* from host memory to host    |
+[1791256367.651138] [adano21:2459224:0]   +--------------------------+------------------------------------------+------------------+
+[1791256367.651139] [adano21:2459224:0]   |                 0..12610 | short                                    | self/memory      |
+[1791256367.651140] [adano21:2459224:0]   |               12611..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256367.651143] [adano21:2459224:0]   +--------------------------+------------------------------------------+------------------+
+[1791256367.651252] [adano21:2459224:0]   +--------------------------+------------------------------------------------------------------------------+
+[1791256367.651256] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256367.651258] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256367.651261] [adano21:2459224:0]   |                 0..44944 | short                                                     | self/memory      |
+[1791256367.651263] [adano21:2459224:0]   |               44945..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256367.651264] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256367.651339] [adano21:2459224:0]   +--------------------------+--------------------------------------------------------------------+
+[1791256367.651343] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256367.651344] [adano21:2459224:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256367.651347] [adano21:2459224:0]   |                  0..1101 | short                                           | self/memory      |
+[1791256367.651350] [adano21:2459224:0]   |                1102..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256367.651351] [adano21:2459224:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256367.651600] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.651605] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send* from host memory                                              |
+[1791256367.651607] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.651610] [adano21:2459224:0]   |                  0..2284 | eager short                                   | self/memory                                   |
+[1791256367.651613] [adano21:2459224:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.651614] [adano21:2459224:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.651616] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.651708] [adano21:2459224:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256367.651712] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(fast-completion) from host memory                         |
+[1791256367.651714] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.651717] [adano21:2459224:0]   |                  0..8184 | eager short                               | self/memory                                   |
+[1791256367.651720] [adano21:2459224:0]   |             8185..262143 | multi-frag eager copy-in copy-out         | self/memory                                   |
+[1791256367.651722] [adano21:2459224:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.651723] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.651986] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.651991] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(multi) from host memory                                       |
+[1791256367.651993] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.651995] [adano21:2459224:0]   |                  0..2434 | eager short                                   | self/memory                                   |
+[1791256367.651998] [adano21:2459224:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.652000] [adano21:2459224:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652001] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652105] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.652109] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* from host memory                                               |
+[1791256367.652111] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652114] [adano21:2459224:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256367.652117] [adano21:2459224:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.652118] [adano21:2459224:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652120] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652202] [adano21:2459224:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256367.652206] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(fast-completion) from host memory                          |
+[1791256367.652208] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.652210] [adano21:2459224:0]   |                  0..8184 | short                                     | self/memory                                   |
+[1791256367.652213] [adano21:2459224:0]   |             8185..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256367.652214] [adano21:2459224:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652216] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.652329] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.652333] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(multi) from host memory                                        |
+[1791256367.652335] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652337] [adano21:2459224:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256367.652340] [adano21:2459224:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.652341] [adano21:2459224:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652344] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652470] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.652474] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag from host memory                               |
+[1791256367.652476] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652479] [adano21:2459224:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256367.652481] [adano21:2459224:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.652483] [adano21:2459224:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652485] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652583] [adano21:2459224:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256367.652587] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(fast-completion) from host memory          |
+[1791256367.652589] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.652591] [adano21:2459224:0]   |                  0..8176 | short                                     | self/memory                                   |
+[1791256367.652594] [adano21:2459224:0]   |             8177..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256367.652596] [adano21:2459224:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652599] [adano21:2459224:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256367.652713] [adano21:2459224:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256367.652717] [adano21:2459224:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(multi) from host memory                        |
+[1791256367.652719] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256367.652722] [adano21:2459224:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256367.652726] [adano21:2459224:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256367.652727] [adano21:2459224:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256367.652729] [adano21:2459224:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.267687] [adano07:1759947:0]     ucp_context.c:2463 UCX  INFO  Version 1.20.1 (loaded from /usr/local/ucx/lib/libucp.so.0)
+[1791256368.352480] [adano07:1759947:0]          parser.c:2364 UCX  INFO  UCX_* env variables: UCX_LOG_LEVEL=info UCX_NET_DEVICES=mlx5_0:1 UCX_PROTO_INFO=y
+[1791256368.354212] [adano07:1759947:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 self cfg#0 tag(self/memory rc_mlx5/mlx5_0:1 cma/memory)  rma(self/memory)  am(self/memory rc_mlx5/mlx5_0:1 cma/memory)
+[1791256368.359057] [adano07:1759947:0]   +--------------------------+-------------------------------------------------------------+
+[1791256368.359068] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put* from host memory to host    |
+[1791256368.359070] [adano07:1759947:0]   +--------------------------+------------------------------------------+------------------+
+[1791256368.359071] [adano07:1759947:0]   |                 0..12610 | short                                    | self/memory      |
+[1791256368.359072] [adano07:1759947:0]   |               12611..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256368.359073] [adano07:1759947:0]   +--------------------------+------------------------------------------+------------------+
+[1791256368.359211] [adano07:1759947:0]   +--------------------------+------------------------------------------------------------------------------+
+[1791256368.359214] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256368.359215] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256368.359216] [adano07:1759947:0]   |                 0..44944 | short                                                     | self/memory      |
+[1791256368.359217] [adano07:1759947:0]   |               44945..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.359218] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------+------------------+
+[1791256368.359293] [adano07:1759947:0]   +--------------------------+--------------------------------------------------------------------+
+[1791256368.359295] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256368.359296] [adano07:1759947:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256368.359298] [adano07:1759947:0]   |                  0..1101 | short                                           | self/memory      |
+[1791256368.359299] [adano07:1759947:0]   |                1102..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.359300] [adano07:1759947:0]   +--------------------------+-------------------------------------------------+------------------+
+[1791256368.359554] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.359558] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send* from host memory                                              |
+[1791256368.359559] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.359560] [adano07:1759947:0]   |                  0..2284 | eager short                                   | self/memory                                   |
+[1791256368.359562] [adano07:1759947:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.359563] [adano07:1759947:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.359564] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.359676] [adano07:1759947:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256368.359679] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(fast-completion) from host memory                         |
+[1791256368.359680] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.359682] [adano07:1759947:0]   |                  0..8184 | eager short                               | self/memory                                   |
+[1791256368.359683] [adano07:1759947:0]   |             8185..262143 | multi-frag eager copy-in copy-out         | self/memory                                   |
+[1791256368.359685] [adano07:1759947:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.359686] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.359956] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.359958] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | tagged message by ucp_tag_send*(multi) from host memory                                       |
+[1791256368.359960] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.359961] [adano07:1759947:0]   |                  0..2434 | eager short                                   | self/memory                                   |
+[1791256368.359962] [adano07:1759947:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.359963] [adano07:1759947:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.359964] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360074] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.360076] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* from host memory                                               |
+[1791256368.360077] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360079] [adano07:1759947:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256368.360080] [adano07:1759947:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.360081] [adano07:1759947:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360082] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360169] [adano07:1759947:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256368.360171] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(fast-completion) from host memory                          |
+[1791256368.360173] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.360174] [adano07:1759947:0]   |                  0..8184 | short                                     | self/memory                                   |
+[1791256368.360175] [adano07:1759947:0]   |             8185..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256368.360176] [adano07:1759947:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360177] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.360288] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.360290] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send*(multi) from host memory                                        |
+[1791256368.360291] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360292] [adano07:1759947:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256368.360293] [adano07:1759947:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.360295] [adano07:1759947:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360296] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360392] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.360394] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag from host memory                               |
+[1791256368.360395] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360396] [adano07:1759947:0]   |                  0..2284 | short                                         | self/memory                                   |
+[1791256368.360397] [adano07:1759947:0]   |             2285..241930 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.360398] [adano07:1759947:0]   |              241931..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360400] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360478] [adano07:1759947:0]   +--------------------------+-------------------------------------------------------------------------------------------+
+[1791256368.360481] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(fast-completion) from host memory          |
+[1791256368.360482] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.360483] [adano07:1759947:0]   |                  0..8176 | short                                     | self/memory                                   |
+[1791256368.360484] [adano07:1759947:0]   |             8177..262143 | multi-frag copy-in                        | self/memory                                   |
+[1791256368.360485] [adano07:1759947:0]   |                256K..inf | (?) rendezvous zero-copy read from remote | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360486] [adano07:1759947:0]   +--------------------------+-------------------------------------------+-----------------------------------------------+
+[1791256368.360596] [adano07:1759947:0]   +--------------------------+-----------------------------------------------------------------------------------------------+
+[1791256368.360599] [adano07:1759947:0]   | ucp_context_0 self cfg#0 | active message by ucp_am_send* with reply flag(multi) from host memory                        |
+[1791256368.360600] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.360601] [adano07:1759947:0]   |                  0..2434 | short                                         | self/memory                                   |
+[1791256368.360602] [adano07:1759947:0]   |              2435..20199 | (?) rendezvous copy from mapped remote memory | self/memory                                   |
+[1791256368.360603] [adano07:1759947:0]   |               20200..inf | (?) rendezvous zero-copy read from remote     | 52% on rc_mlx5/mlx5_0:1 and 48% on cma/memory |
+[1791256368.360605] [adano07:1759947:0]   +--------------------------+-----------------------------------------------+-----------------------------------------------+
+[1791256368.365405] [adano07:1759947:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 inter-node cfg#1 tag(rc_mlx5/mlx5_0:1)  rma(rc_mlx5/mlx5_0:1)  am(rc_mlx5/mlx5_0:1)
+[1791256368.365531] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------------------+
+[1791256368.365533] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put* from host memory to host    |
+[1791256368.365535] [adano07:1759947:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256368.365536] [adano07:1759947:0]   |                          0..2K | short                                    | rc_mlx5/mlx5_0:1 |
+[1791256368.365537] [adano07:1759947:0]   |                      2049..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256368.365538] [adano07:1759947:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256368.365610] [adano07:1759947:0]   +--------------------------------+------------------------------------------------------------------------------+
+[1791256368.365613] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256368.365614] [adano07:1759947:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256368.365616] [adano07:1759947:0]   |                          0..2K | short                                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.365617] [adano07:1759947:0]   |                    2049..18457 | copy-in                                                   | rc_mlx5/mlx5_0:1 |
+[1791256368.365619] [adano07:1759947:0]   |                     18458..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.365620] [adano07:1759947:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256368.365679] [adano21:2459224:0]      ucp_worker.c:1912 UCX  INFO    ucp_context_0 inter-node cfg#1 tag(rc_mlx5/mlx5_0:1)  rma(rc_mlx5/mlx5_0:1)  am(rc_mlx5/mlx5_0:1)
+[1791256368.365706] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256368.365708] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256368.365710] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.365711] [adano07:1759947:0]   |                         0..587 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256368.365713] [adano07:1759947:0]   |                       588..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.365714] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.365800] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------------------+
+[1791256368.365804] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put* from host memory to host    |
+[1791256368.365806] [adano21:2459224:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256368.365809] [adano21:2459224:0]   |                          0..2K | short                                    | rc_mlx5/mlx5_0:1 |
+[1791256368.365812] [adano21:2459224:0]   |                      2049..inf | zero-copy                                | rc_mlx5/mlx5_0:1 |
+[1791256368.365813] [adano21:2459224:0]   +--------------------------------+------------------------------------------+------------------+
+[1791256368.365874] [adano21:2459224:0]   +--------------------------------+------------------------------------------------------------------------------+
+[1791256368.365878] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(fast-completion) from host memory to host    |
+[1791256368.365880] [adano21:2459224:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256368.365883] [adano21:2459224:0]   |                          0..2K | short                                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.365886] [adano21:2459224:0]   |                    2049..18457 | copy-in                                                   | rc_mlx5/mlx5_0:1 |
+[1791256368.365887] [adano21:2459224:0]   |                     18458..inf | zero-copy                                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.365888] [adano21:2459224:0]   +--------------------------------+-----------------------------------------------------------+------------------+
+[1791256368.365967] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256368.365971] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | remote memory write by ucp_put*(multi) from host memory to host    |
+[1791256368.365973] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.365975] [adano21:2459224:0]   |                         0..587 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256368.365978] [adano21:2459224:0]   |                       588..inf | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.365979] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.366013] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366015] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send* from host memory             |
+[1791256368.366016] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366018] [adano07:1759947:0]   |                        0..2038 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256368.366019] [adano07:1759947:0]   |                     2039..8246 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256368.366020] [adano07:1759947:0]   |                    8247..39637 | multi-frag eager zero-copy copy-out       | rc_mlx5/mlx5_0:1 |
+[1791256368.366021] [adano07:1759947:0]   |                     39638..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366022] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366174] [adano07:1759947:0]   +--------------------------------+----------------------------------------------------------------------+
+[1791256368.366176] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(fast-completion) from host memory    |
+[1791256368.366177] [adano07:1759947:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256368.366179] [adano07:1759947:0]   |                        0..2038 | eager short                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.366180] [adano07:1759947:0]   |                     2039..8246 | eager copy-in copy-out                            | rc_mlx5/mlx5_0:1 |
+[1791256368.366181] [adano07:1759947:0]   |                    8247..18447 | multi-frag eager copy-in copy-out                 | rc_mlx5/mlx5_0:1 |
+[1791256368.366182] [adano07:1759947:0]   |                  18448..262143 | multi-frag eager zero-copy copy-out               | rc_mlx5/mlx5_0:1 |
+[1791256368.366183] [adano07:1759947:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote         | rc_mlx5/mlx5_0:1 |
+[1791256368.366184] [adano07:1759947:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256368.366248] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366252] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send* from host memory             |
+[1791256368.366253] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366256] [adano21:2459224:0]   |                        0..2038 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256368.366259] [adano21:2459224:0]   |                     2039..8246 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256368.366260] [adano21:2459224:0]   |                    8247..39637 | multi-frag eager zero-copy copy-out       | rc_mlx5/mlx5_0:1 |
+[1791256368.366262] [adano21:2459224:0]   |                     39638..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366265] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366405] [adano21:2459224:0]   +--------------------------------+----------------------------------------------------------------------+
+[1791256368.366409] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(fast-completion) from host memory    |
+[1791256368.366410] [adano21:2459224:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256368.366413] [adano21:2459224:0]   |                        0..2038 | eager short                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.366416] [adano21:2459224:0]   |                     2039..8246 | eager copy-in copy-out                            | rc_mlx5/mlx5_0:1 |
+[1791256368.366417] [adano21:2459224:0]   |                    8247..18447 | multi-frag eager copy-in copy-out                 | rc_mlx5/mlx5_0:1 |
+[1791256368.366419] [adano21:2459224:0]   |                  18448..262143 | multi-frag eager zero-copy copy-out               | rc_mlx5/mlx5_0:1 |
+[1791256368.366421] [adano21:2459224:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote         | rc_mlx5/mlx5_0:1 |
+[1791256368.366423] [adano21:2459224:0]   +--------------------------------+---------------------------------------------------+------------------+
+[1791256368.366525] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366527] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(multi) from host memory      |
+[1791256368.366529] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366530] [adano07:1759947:0]   |                         0..514 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256368.366531] [adano07:1759947:0]   |                      515..4066 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256368.366532] [adano07:1759947:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366533] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366693] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366695] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* from host memory              |
+[1791256368.366696] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366698] [adano07:1759947:0]   |                        0..2038 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.366699] [adano07:1759947:0]   |                     2039..8246 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.366700] [adano07:1759947:0]   |                    8247..39624 | multi-frag zero-copy                      | rc_mlx5/mlx5_0:1 |
+[1791256368.366701] [adano07:1759947:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366702] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366764] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366769] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | tagged message by ucp_tag_send*(multi) from host memory      |
+[1791256368.366771] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366774] [adano21:2459224:0]   |                         0..514 | eager short                               | rc_mlx5/mlx5_0:1 |
+[1791256368.366777] [adano21:2459224:0]   |                      515..4066 | eager zero-copy copy-out                  | rc_mlx5/mlx5_0:1 |
+[1791256368.366780] [adano21:2459224:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366782] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366849] [adano07:1759947:0]   +--------------------------------+---------------------------------------------------------------------+
+[1791256368.366851] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(fast-completion) from host memory    |
+[1791256368.366852] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256368.366854] [adano07:1759947:0]   |                        0..2038 | short                                            | rc_mlx5/mlx5_0:1 |
+[1791256368.366855] [adano07:1759947:0]   |                     2039..8246 | copy-in                                          | rc_mlx5/mlx5_0:1 |
+[1791256368.366856] [adano07:1759947:0]   |                    8247..18453 | multi-frag copy-in                               | rc_mlx5/mlx5_0:1 |
+[1791256368.366857] [adano07:1759947:0]   |                  18454..262143 | multi-frag zero-copy                             | rc_mlx5/mlx5_0:1 |
+[1791256368.366858] [adano07:1759947:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote        | rc_mlx5/mlx5_0:1 |
+[1791256368.366859] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256368.366977] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.366981] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* from host memory              |
+[1791256368.366984] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.366987] [adano21:2459224:0]   |                        0..2038 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.366988] [adano21:2459224:0]   |                     2039..8246 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.366990] [adano21:2459224:0]   |                    8247..39624 | multi-frag zero-copy                      | rc_mlx5/mlx5_0:1 |
+[1791256368.366992] [adano21:2459224:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.366993] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.367037] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.367039] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(multi) from host memory       |
+[1791256368.367040] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.367042] [adano07:1759947:0]   |                         0..514 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.367043] [adano07:1759947:0]   |                      515..4066 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.367044] [adano07:1759947:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.367045] [adano07:1759947:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.367135] [adano21:2459224:0]   +--------------------------------+---------------------------------------------------------------------+
+[1791256368.367138] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(fast-completion) from host memory    |
+[1791256368.367140] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256368.367142] [adano21:2459224:0]   |                        0..2038 | short                                            | rc_mlx5/mlx5_0:1 |
+[1791256368.367146] [adano21:2459224:0]   |                     2039..8246 | copy-in                                          | rc_mlx5/mlx5_0:1 |
+[1791256368.367147] [adano21:2459224:0]   |                    8247..18453 | multi-frag copy-in                               | rc_mlx5/mlx5_0:1 |
+[1791256368.367149] [adano21:2459224:0]   |                  18454..262143 | multi-frag zero-copy                             | rc_mlx5/mlx5_0:1 |
+[1791256368.367151] [adano21:2459224:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote        | rc_mlx5/mlx5_0:1 |
+[1791256368.367152] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------+------------------+
+[1791256368.367211] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256368.367213] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag from host memory    |
+[1791256368.367214] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.367216] [adano07:1759947:0]   |                        0..2030 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256368.367217] [adano07:1759947:0]   |                     2031..8238 | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.367218] [adano07:1759947:0]   |                    8239..39624 | multi-frag zero-copy                            | rc_mlx5/mlx5_0:1 |
+[1791256368.367219] [adano07:1759947:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote       | rc_mlx5/mlx5_0:1 |
+[1791256368.367220] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.367321] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------+
+[1791256368.367325] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send*(multi) from host memory       |
+[1791256368.367326] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.367328] [adano21:2459224:0]   |                         0..514 | short                                     | rc_mlx5/mlx5_0:1 |
+[1791256368.367330] [adano21:2459224:0]   |                      515..4066 | zero-copy                                 | rc_mlx5/mlx5_0:1 |
+[1791256368.367333] [adano21:2459224:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote | rc_mlx5/mlx5_0:1 |
+[1791256368.367334] [adano21:2459224:0]   +--------------------------------+-------------------------------------------+------------------+
+[1791256368.367362] [adano07:1759947:0]   +--------------------------------+-------------------------------------------------------------------------------------+
+[1791256368.367365] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(fast-completion) from host memory    |
+[1791256368.367366] [adano07:1759947:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256368.367367] [adano07:1759947:0]   |                        0..2030 | short                                                            | rc_mlx5/mlx5_0:1 |
+[1791256368.367368] [adano07:1759947:0]   |                     2031..8238 | copy-in                                                          | rc_mlx5/mlx5_0:1 |
+[1791256368.367369] [adano07:1759947:0]   |                    8239..18453 | multi-frag copy-in                                               | rc_mlx5/mlx5_0:1 |
+[1791256368.367370] [adano07:1759947:0]   |                  18454..262143 | multi-frag zero-copy                                             | rc_mlx5/mlx5_0:1 |
+[1791256368.367371] [adano07:1759947:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote                        | rc_mlx5/mlx5_0:1 |
+[1791256368.367373] [adano07:1759947:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256368.367486] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------------------+
+[1791256368.367489] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag from host memory    |
+[1791256368.367491] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.367493] [adano21:2459224:0]   |                        0..2030 | short                                           | rc_mlx5/mlx5_0:1 |
+[1791256368.367496] [adano21:2459224:0]   |                     2031..8238 | zero-copy                                       | rc_mlx5/mlx5_0:1 |
+[1791256368.367498] [adano21:2459224:0]   |                    8239..39624 | multi-frag zero-copy                            | rc_mlx5/mlx5_0:1 |
+[1791256368.367499] [adano21:2459224:0]   |                     39625..inf | (?) rendezvous zero-copy read from remote       | rc_mlx5/mlx5_0:1 |
+[1791256368.367502] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------+------------------+
+[1791256368.367548] [adano07:1759947:0]   +--------------------------------+---------------------------------------------------------------------------+
+[1791256368.367550] [adano07:1759947:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(multi) from host memory    |
+[1791256368.367552] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256368.367553] [adano07:1759947:0]   |                         0..514 | short                                                  | rc_mlx5/mlx5_0:1 |
+[1791256368.367554] [adano07:1759947:0]   |                      515..4066 | zero-copy                                              | rc_mlx5/mlx5_0:1 |
+[1791256368.367555] [adano07:1759947:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote              | rc_mlx5/mlx5_0:1 |
+[1791256368.367556] [adano07:1759947:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256368.367636] [adano21:2459224:0]   +--------------------------------+-------------------------------------------------------------------------------------+
+[1791256368.367639] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(fast-completion) from host memory    |
+[1791256368.367641] [adano21:2459224:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256368.367644] [adano21:2459224:0]   |                        0..2030 | short                                                            | rc_mlx5/mlx5_0:1 |
+[1791256368.367647] [adano21:2459224:0]   |                     2031..8238 | copy-in                                                          | rc_mlx5/mlx5_0:1 |
+[1791256368.367648] [adano21:2459224:0]   |                    8239..18453 | multi-frag copy-in                                               | rc_mlx5/mlx5_0:1 |
+[1791256368.367652] [adano21:2459224:0]   |                  18454..262143 | multi-frag zero-copy                                             | rc_mlx5/mlx5_0:1 |
+[1791256368.367653] [adano21:2459224:0]   |                      256K..inf | (?) rendezvous zero-copy read from remote                        | rc_mlx5/mlx5_0:1 |
+[1791256368.367657] [adano21:2459224:0]   +--------------------------------+------------------------------------------------------------------+------------------+
+[1791256368.367853] [adano21:2459224:0]   +--------------------------------+---------------------------------------------------------------------------+
+[1791256368.367858] [adano21:2459224:0]   | ucp_context_0 inter-node cfg#1 | active message by ucp_am_send* with reply flag(multi) from host memory    |
+[1791256368.367860] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------+------------------+
+[1791256368.367863] [adano21:2459224:0]   |                         0..514 | short                                                  | rc_mlx5/mlx5_0:1 |
+[1791256368.367866] [adano21:2459224:0]   |                      515..4066 | zero-copy                                              | rc_mlx5/mlx5_0:1 |
+[1791256368.367868] [adano21:2459224:0]   |                      4067..inf | (?) rendezvous zero-copy read from remote              | rc_mlx5/mlx5_0:1 |
+[1791256368.367871] [adano21:2459224:0]   +--------------------------------+--------------------------------------------------------+------------------+
+
+# OSU MPI Bandwidth Test v7.5.2
+# Datatype: MPI_CHAR.
+# Size      Bandwidth (MB/s)
+1048576             12209.41
+# SUMMARY ib_lines(rc|dc|ud_mlx5)=244 tcp_lines=0
