@@ -1,8 +1,8 @@
-]633;E;mpichversion;ad53d208-026b-4fe0-81d6-5830730d6e21]633;CMPICH Version:      5.0.1
+MPICH Version:      5.0.1
 MPICH Release date: Fri Apr 10 09:45:31 AM CDT 2026
 MPICH ABI:          18:1:6
 MPICH Device:       ch4:ucx
-MPICH configure:    --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/mpich-5.0.1-77eqg4vx4iukqucy3vmm4c5zxr5c5zbf --disable-maintainer-mode --disable-silent-rules --enable-shared --with-pm=hydra --enable-romio --without-ibverbs --enable-wrapper-rpath=yes --with-yaksa=embedded --without-ze --with-hwloc=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/hwloc-2.13.0-2kcetpwpyrvg7mdpdu36kmo76a7dstga --enable-fortran --with-slurm=no --without-cuda --without-hip --with-device=ch4:ucx --with-ucx=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-enbzs25gqnxrdixiefnc6vbumfuqh3fk --enable-libxml2 --with-datatype-engine=auto
+MPICH configure:    --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/mpich-5.0.1-amarjcr2tsrjbsc4v7s3kvx7uumjhryz --disable-maintainer-mode --disable-silent-rules --enable-shared --with-pm=hydra --enable-romio --without-ibverbs --enable-wrapper-rpath=yes --with-yaksa=embedded --without-ze --with-hwloc=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/hwloc-2.13.0-2kcetpwpyrvg7mdpdu36kmo76a7dstga --enable-fortran --with-slurm=no --without-cuda --without-hip --with-device=ch4:ucx --with-ucx=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi --enable-libxml2 --with-datatype-engine=auto
 MPICH CC:           /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/gcc     -O2
 MPICH CXX:          /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/g++   -O2
 MPICH F77:          /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/compiler-wrapper-1.1.0-g7vbusu5xw6y5e5xdmrklnic5zh64ak4/libexec/spack/gcc/gfortran   -O2
@@ -10,9 +10,9 @@ MPICH FC:           /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-z
 MPICH features:     threadcomm
 
 # Library version: 1.20.1
-# Library path: /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-enbzs25gqnxrdixiefnc6vbumfuqh3fk/lib/libucs.so.0
+# Library path: /home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi/lib/libucs.so.0
 # API headers version: 1.20.1
 # Git branch '', revision d8e50df
-# Configured with: --disable-logging --disable-debug --disable-assertions --disable-params-check --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-enbzs25gqnxrdixiefnc6vbumfuqh3fk --without-go --disable-doxygen-doc --disable-assertions --enable-compiler-opt=3 --without-java --enable-shared --enable-static --disable-logging --disable-mt --with-openmp --enable-optimizations --disable-params-check --disable-gtest --with-pic --without-cuda --enable-cma --with-dc --without-dm --without-gdrcopy --without-ib-hw-tm --without-knem --with-rc --with-ud --without-xpmem --with-mlx5 --without-fuse3 --without-bfd --with-rdmacm=/usr --with-verbs=/usr --with-avx --without-rocm
+# Configured with: --disable-logging --disable-debug --disable-assertions --disable-params-check --prefix=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/ucx-1.20.1-xqq2pjrdiarbfrv3ftfgllqvi2oyatqi --without-go --disable-doxygen-doc --disable-assertions --enable-compiler-opt=3 --without-java --enable-shared --enable-static --disable-logging --disable-mt --with-openmp --enable-optimizations --disable-params-check --disable-gtest --with-pic --without-cuda --enable-cma --with-dc --without-dm --without-gdrcopy --without-ib-hw-tm --without-knem --with-rc --with-ud --without-xpmem --with-mlx5 --without-fuse3 --without-bfd --with-rdmacm=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/rdma-core-49.0-ag45bxzfb74ui3xxa6bvjeztbfmurwvf --with-verbs=/home/lovelace/proj/proj1163/m203656/spack/opt/spack/linux-zen/rdma-core-49.0-ag45bxzfb74ui3xxa6bvjeztbfmurwvf --with-avx --without-rocm
 rdma-core-48.0-1.el8.x86_64
 gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-28)
