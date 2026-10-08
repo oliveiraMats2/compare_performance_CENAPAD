@@ -31,7 +31,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parent.parent
 LOGS, RES, FIG = REPO / "logs", REPO / "results", REPO / "figures"
 SCENARIOS, BENCHES = ("native", "container"), ("osu_bw", "osu_latency")
-COLORS = {"native": "#1f4e79", "container": "#c55a11"}
+COLORS = {"native": "#2ca02c", "container": "#d62728"}
 LINK_MBS = 12500.0  # HDR100: 100 Gb/s = 12500 MB/s (OSU MB = 1e6 bytes)
 
 
@@ -62,6 +62,8 @@ def load(scen, bench):
 
 
 def plot(bench, data, ylabel, fname, logy):
+    # large fonts: the report shows both figures side by side at half page width
+    plt.rcParams.update({"axes.labelsize": 17, "xtick.labelsize": 16, "ytick.labelsize": 16, "legend.fontsize": 13})
     fig, ax = plt.subplots(figsize=(8, 5))
     for scen, (sizes, v) in data.items():
         m = sizes > 0  # 0 B cannot sit on a log axis
@@ -73,11 +75,12 @@ def plot(bench, data, ylabel, fname, logy):
     if logy:
         ax.set_yscale("log")
     ax.set_xscale("log", base=2)
+    ax.margins(x=0)  # x axis starts at the first size and ends at the last
     ax.set_xlabel("Message size (bytes)")
     ax.set_ylabel(ylabel)
-    ax.set_title(f"{bench}: native vs Apptainer (line = mean, band = min to max over runs)", fontsize=10)
+    ax.set_title(f"{bench}: native vs Apptainer", fontsize=17)
     ax.grid(True, which="both", alpha=0.3)
-    ax.legend(fontsize=8)
+    ax.legend()
     fig.tight_layout()
     fig.savefig(FIG / fname, dpi=150)
     plt.close(fig)

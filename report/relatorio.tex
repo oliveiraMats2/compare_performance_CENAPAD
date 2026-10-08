@@ -1,81 +1,132 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[Portugues]{ic-tese-v3}
 \usepackage[utf8]{inputenc}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small,skip=3pt}
+\usepackage{booktabs}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
-\usepackage{lmodern}
-\usepackage[margin=1.8cm]{geometry}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{hyperref}
+\usepackage{xcolor}
+\renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.8}\renewcommand{\textfraction}{0.07}\renewcommand{\floatpagefraction}{0.85}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}\setlength{\floatsep}{6pt plus 2pt minus 2pt}\setlength{\abovecaptionskip}{3pt}
+\usepackage{fancyhdr}
+\usepackage[ttscale=.875]{libertine}
+\usepackage{libertinust1math}
+\usepackage{tabularx}
 \usepackage{titlesec}
-\titlespacing*{\section}{0pt}{1.0ex}{0.5ex}
-\setlength{\parskip}{0.25ex}
+\titlespacing*{\section}{0pt}{1.6ex}{0.8ex}
+\definecolor{chgbluetext}{HTML}{1565C0}
 
-\title{\vspace{-1.8cm}Nativo vs.\ contêiner: \texttt{osu\_bw} e \texttt{osu\_latency} no CENAPAD}
-\author{Mateus Oliveira (m203656@dac.unicamp.edu.br), MO652}
-\date{outubro de 2026}
+% same margins as the computer vision report template
+\geometry{reset,a4paper,left=0.75in,top=0.9in,textwidth=40pc,textheight=58.5pc,headheight=0pt,headsep=0pt}
+\parindent 0.2in
+
+\usepackage[colorlinks,linkcolor=chgbluetext,citecolor=black,urlcolor=chgbluetext]{hyperref}
+
+\providecommand{\resetlang}{} % ponytail: used by ic-tese-v3.cls but never defined there
 
 \begin{document}
-\maketitle
-\vspace{-0.8cm}
+
+\paginasiniciais
+% ponytail: ic-tese-v3 maps plain to empty, so number pages with fancyhdr (centered footer)
+\pagestyle{fancy}\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}\thispagestyle{fancy}
+\vspace{-16mm}
 \begin{center}
-Repositório: \href{https://github.com/oliveiraMats2/compare_performance_CENAPAD}{github.com/oliveiraMats2/compare\_performance\_CENAPAD}
+{\large\textbf{Trabalho 1 - Nativo vs. Contêiner | MO652}}\\[2mm]
+\small
+\begin{tabular}{|l||c||l|}
+ \hline
+ Nome & RA & Email \\
+ \hline\hline
+ Mateus Oliveira da Silva & 203656 & m203656@dac.unicamp.br \\
+ \hline
+\end{tabular}
 \end{center}
 
-\section{Ambiente}
-Dois nós CPU do CENAPAD (\texttt{adano07} e \texttt{adano21}, job \texttt{1027215.ada}, 06/10/2026), fila \texttt{paralela} com \texttt{select=2:\allowbreak ncpus=128:\allowbreak mpiprocs=1} e \texttt{place=scatter:exclhost}. Ambos têm HCA Mellanox ConnectX-6 (MT4123, \texttt{mlx5\_0}, firmware 20.43.3608), porta \emph{Active/LinkUp}, camada de enlace InfiniBand, taxa 100 Gb/s (HDR100).
+\section{Ambiente e procedimento}
+Este trabalho compara a execução nativa, com MPICH, UCX e OSU instalados por Spack, e a execução em contêiner Apptainer, construído por HPCCM com as mesmas versões, dos benchmarks \texttt{osu\_bw} e \texttt{osu\_latency} entre dois nós CPU do CENAPAD ligados por InfiniBand HDR100. A Tabela~\ref{tab:amb} resume o ambiente e os parâmetros, e o código, os logs e os scripts estão no repositório \href{https://github.com/oliveiraMats2/compare_performance_CENAPAD}{github.com/\allowbreak oliveiraMats2/\allowbreak compare\_\allowbreak performance\_\allowbreak CENAPAD}.
 
-\textbf{Nativo:} Spack v1.2.2 com GCC 8.5.0 (sistema, AlmaLinux 8): MPICH 5.0.1 (\texttt{ch4:ucx}), UCX 1.20.1 e OSU Micro-Benchmarks 7.5.2; a especificação concretizada está em \texttt{spack/spack.lock}.
-\textbf{Contêiner:} receita HPCCM sobre \texttt{ubuntu:24.04}, GCC do \texttt{apt} do Ubuntu, com as mesmas versões de MPICH (5.0.1, \texttt{ch4:ucx}), UCX (1.20.1) e OSU (7.5.2), executada com Singularity.
+\begin{table}[!htb]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Item} & \textbf{Nativo} & \textbf{Contêiner} \\
+\hline\hline
+Sistema base & AlmaLinux 8 & \texttt{ubuntu:24.04} com Apptainer \\ \hline
+Instalação & Spack v1.2.2, \texttt{spack/spack.lock} & HPCCM, \texttt{container/osu\_mpich.py} \\ \hline
+Compilador & GCC 8.5.0 do sistema & GCC do \texttt{apt} do Ubuntu \\ \hline
+MPICH & \multicolumn{2}{c|}{5.0.1, \texttt{ch4:ucx}} \\ \hline
+UCX & \multicolumn{2}{c|}{1.20.1} \\ \hline
+OSU Micro-Benchmarks & \multicolumn{2}{c|}{7.5.2} \\ \hline
+Pilha IB & \texttt{rdma-core} 48.0 do sistema; UCX ligado ao \texttt{rdma-core} 49.0 do Spack & \texttt{rdma-core} 48.0 compilado na imagem \\ \hline
+Opções do UCX & \texttt{-{}-enable-optimizations}, \texttt{-{}-enable-compiler-opt=3}, \texttt{-{}-with-avx}, \texttt{-{}-enable-cma}, \texttt{-{}-disable-mt} & só \texttt{-{}-enable-optimizations} \\ \hline
+Opções do MPICH & \texttt{ch4:ucx}, \texttt{hydra}, \texttt{hwloc} e \texttt{yaksa} explícitos & só \texttt{-{}-with-device=ch4:ucx} \\ \hline\hline
+Nós e job & \multicolumn{2}{l|}{\texttt{adano07} e \texttt{adano21}, job \texttt{1027215.ada} em 06/10/2026} \\ \hline
+HCA & \multicolumn{2}{l|}{ConnectX-6 MT4123, \texttt{mlx5\_0}, firmware 20.43.3608, \emph{Active/LinkUp}, HDR100 de 100 Gb/s} \\ \hline
+PBS & \multicolumn{2}{l|}{fila \texttt{paralela}, \texttt{select=2:ncpus=128:mpiprocs=1}, \texttt{place=scatter:exclhost}} \\ \hline
+Lançamento & \texttt{mpiexec -n 2 -ppn 1} do host & \texttt{mpiexec} do host + \texttt{apptainer exec} \\ \hline
+Parâmetros OSU & \multicolumn{2}{l|}{\texttt{-m 1:4194304}, de 1 B a 4 MiB, iterações padrão, 3 repetições intercaladas} \\ \hline
+Verificação IB & \multicolumn{2}{l|}{transporte \texttt{rc\_mlx5} em \texttt{mlx5\_0:1} nos dois cenários, 244 linhas \texttt{mlx5} e 0 de TCP} \\ \hline
+\end{tabularx}
+\caption{Ambiente e parâmetros dos experimentos.}
+\label{tab:amb}
+\end{table}
 
-\textbf{Pilha InfiniBand (desvio do enunciado).} Os nós \emph{não} têm Mellanox OFED: a pilha de espaço de usuário é o \texttt{rdma-core} 48.0 da própria distribuição (\texttt{rdma-core-48.0-1.el8}, \texttt{libibverbs-48.0-1.el8}). Por isso a receita compila o \texttt{rdma-core} 48.0 no contêiner (o Ubuntu 24.04 traz o 50.0) em vez do MOFED, igualando a versão do host (\texttt{libibverbs.so.1.14.48.0}). No host, o UCX do Spack foi ligado a um \texttt{rdma-core} 49.0 do próprio Spack (não há pacote 48.0). Isso é compatível porque o driver de kernel (\texttt{mlx5}) é o mesmo e a \texttt{libibverbs} mantém ABI estável entre essas versões.
+\textbf{Pilha InfiniBand.} Os nós não têm Mellanox OFED, e sim o \texttt{rdma-core} 48.0 da distribuição; por isso o contêiner compila essa mesma versão no lugar do MOFED. O Spack, sem a 48.0, usa a 49.0, compatível porque o driver \texttt{mlx5} é o mesmo e a ABI da \texttt{libibverbs} é estável.
 
-\section{Procedimento}
-Dois processos MPI, um por nó (\texttt{mpiexec -n 2 -ppn 1}), lançados pelo \texttt{mpiexec} do host em ambos os cenários; no contêiner ele executa \texttt{singularity exec} (modelo híbrido). Mensagens de 1 B a 4 MiB (\texttt{-m 1:4194304}), iterações padrão do OSU. Foram 3 repetições por teste e cenário, intercaladas no mesmo job (repetição $k$: bw nativo, bw contêiner, latência nativa, latência contêiner), nos mesmos nós. O uso de InfiniBand foi verificado com \texttt{UCX\_LOG\_LEVEL=info} e \texttt{UCX\_NET\_DEVICES=mlx5\_0:1}: nos dois cenários o UCX escolhe \texttt{inter-node cfg\#1 tag(rc\_mlx5/mlx5\_0:1) rma(rc\_mlx5/mlx5\_0:1)\ldots}, com 244 linhas de transporte \texttt{rc/dc/ud\_mlx5} e nenhuma de TCP (\texttt{logs/ib\_check.log}). Gráficos gerados por \texttt{analysis/plot.py}.
+\textbf{Procedimento.} Dois processos MPI, um por nó, lançados pelo \texttt{mpiexec} do host nos dois cenários, no modelo híbrido descrito na Tabela~\ref{tab:amb}. As 3 repetições de cada teste foram intercaladas no mesmo job e nos mesmos nós, sempre na mesma ordem: largura de banda nativa, largura de banda no contêiner, latência nativa e latência no contêiner. O log de UCX confirma InfiniBand e nenhum TCP nos dois cenários.
 
 \section{Resultados}
-\begin{figure}[h]
+A Figura~\ref{fig:res} mostra a largura de banda e a latência em função do tamanho da mensagem nos dois cenários, e a Tabela~\ref{tab:res} resume os valores usados na análise.
+
+\begin{figure}[!htb]
 \centering
-\begin{minipage}{0.49\textwidth}\centering
-\includegraphics[width=\linewidth]{../figures/bandwidth.png}\\[-0.5ex]
-{\small (a) Largura de banda (\texttt{osu\_bw})}
+\begin{minipage}{0.495\textwidth}\centering
+\includegraphics[width=\linewidth]{../figures/bandwidth.png}\\[-0.3ex]
+{\small Largura de banda, \texttt{osu\_bw}. Tracejado: 100 Gb/s.}
 \end{minipage}\hfill
-\begin{minipage}{0.49\textwidth}\centering
-\includegraphics[width=\linewidth]{../figures/latency.png}\\[-0.5ex]
-{\small (b) Latência (\texttt{osu\_latency})}
+\begin{minipage}{0.495\textwidth}\centering
+\includegraphics[width=\linewidth]{../figures/latency.png}\\[-0.3ex]
+{\small Latência, \texttt{osu\_latency}, com eixo $y$ logarítmico.}
 \end{minipage}
 \vspace{-1ex}
-\caption{Nativo vs.\ contêiner em função do tamanho da mensagem (eixo $x$ em escala $\log_2$). Linha: média de 3 execuções; faixa: mínimo a máximo.}
+\caption{Nativo em verde e contêiner em vermelho, em função do tamanho da mensagem de 1 B a 4 MiB, com eixo $x$ em escala $\log_2$. Linha: média de 3 execuções. Faixa: mínimo a máximo.}
+\label{fig:res}
 \end{figure}
 
-\begin{table}[h]
-\centering\small
-\vspace{-2ex}
-\begin{tabular}{lrrr}
-\toprule
-Métrica & Nativo & Contêiner & Diferença \\
-\midrule
-Banda média em 4 MiB (MB/s) & 12338,3 & 12277,0 & $-0{,}50$\,\% \\
-Banda em 4 MiB (Gb/s, \% de 100 Gb/s) & 98,71 (98,7\,\%) & 98,22 (98,2\,\%) & \\
-Banda média em 256 B (MB/s) & 457 a 472 & 267 a 294 & $-38{,}9$\,\% \\
-Latência média em 1 B ($\mu$s) & 1,913 & 1,933 & $+1{,}05$\,\% \\
-Latência média em 4 MiB ($\mu$s) & 347,11 & 347,18 & $\approx 0$ \\
-CV máximo \texttt{osu\_bw} / \texttt{osu\_latency} & 4,30\,\% / 10,32\,\% & 11,11\,\% / 1,72\,\% & \\
-\bottomrule
+\begin{table}[!htb]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{|l|r|r|r|}
+\hline
+\textbf{Métrica} & \textbf{Nativo} & \textbf{Contêiner} & \textbf{Diferença} \\
+\hline\hline
+Banda média em 4 MiB (MB/s) & 12338,3 & 12277,0 & $-0{,}50$\,\% \\ \hline
+Banda média em 4 MiB (Gb/s) & 98,71 & 98,22 & \\ \hline
+Percentual dos 100 Gb/s & 98,7\,\% & 98,2\,\% & \\ \hline
+Banda média em 256 B (MB/s) & 457 a 472 & 267 a 294 & $-38{,}9$\,\% \\ \hline
+Latência média em 1 B ($\mu$s) & 1,913 & 1,933 & $+1{,}05$\,\% \\ \hline
+Latência média em 4 MiB ($\mu$s) & 347,11 & 347,18 & $\approx 0$ \\ \hline
+Coeficiente de variação máximo \texttt{osu\_bw} / \texttt{osu\_latency} & 4,30\,\% / 10,32\,\% & 11,11\,\% / 1,72\,\% & \\ \hline
 \end{tabular}
-\caption{Valores principais (MB do OSU $=10^6$ B; em 256 B, faixa mínimo a máximo das 3 execuções e diferença das médias).}
+\caption{Valores principais dos resultados, com MB do OSU $=10^6$ B. Em 256 B: faixa de mínimo a máximo das 3 execuções e diferença das médias.}
+\label{tab:res}
 \end{table}
-\vspace{-3ex}
 
 \section{Análise}
-\textbf{Efeito do tamanho da mensagem.} Para mensagens pequenas domina o custo fixo por mensagem: a latência fica entre 1,91 e 1,94\,$\mu$s de 1 a 16 B e a banda é baixa. Para mensagens grandes domina a transferência: a latência praticamente dobra a cada duplicação do tamanho (347\,$\mu$s em 4 MiB) e a banda cresce até saturar o enlace.
+\textbf{Efeito do tamanho da mensagem.} Em mensagens pequenas domina o custo fixo por mensagem: a latência fica entre 1,91 e 1,94\,$\mu$s de 1 a 16 B e a banda é baixa. Em mensagens grandes domina a transferência: a latência dobra a cada duplicação do tamanho, até 347\,$\mu$s em 4 MiB, e a banda satura o enlace.
 
-\textbf{Banda máxima e percentual do teórico.} O OSU reporta MB/s com MB $=10^6$ B; como 1 MB/s $= 8$ Mb/s, Gb/s $=$ MB/s $\times 8 / 1000$. O pico médio nativo foi 12338,3 MB/s em 4 MiB $= 98{,}71$ Gb/s, ou 98,7\,\% dos 100 Gb/s; no contêiner, 12277,0 MB/s $= 98{,}22$ Gb/s (98,2\,\%).
+\textbf{Banda máxima e percentual do teórico.} Como o OSU usa MB $=10^6$ B, 1 MB/s $= 8$ Mb/s e Gb/s $=$ MB/s $\times 8/1000$. O pico médio nativo, 12338,3 MB/s em 4 MiB, equivale a 98,71 Gb/s, ou 98,7\,\% dos 100 Gb/s; o do contêiner, 12277,0 MB/s, a 98,22 Gb/s, ou 98,2\,\%, como mostra a Tabela~\ref{tab:res}.
 
-\textbf{Estabilização.} Nos dois cenários a banda atinge pelo menos 95\,\% do pico a partir de 64 KiB e permanece nesse patamar. O salto de 32 KiB para 64 KiB (nativo 7783,9 para 12010,3 MB/s, $+54$\,\%; contêiner 7640,2 para 11998,9 MB/s, $+57$\,\%) coincide com a troca do protocolo \emph{eager} pelo \emph{rendezvous} (RDMA \emph{zero-copy}).
+\textbf{Estabilização.} A banda passa de 95\,\% do pico a partir de 64 KiB nos dois cenários e não muda mais. De 32 para 64 KiB ela salta 54\,\% no nativo e 57\,\% no contêiner, o que coincide com a troca do protocolo \emph{eager} pelo \emph{rendezvous}, que transfere por RDMA sem cópia intermediária.
 
-\textbf{Nativo vs.\ contêiner e consistência.} Onde a rede é o gargalo ($\geq 64$ KiB) o contêiner fica de $-0{,}06$\,\% a $-0{,}53$\,\% do nativo: custo irrelevante. As diferenças aparecem em mensagens pequenas e médias, onde pesa o custo de software por mensagem. Em 256 B o contêiner é 38,9\,\% mais lento, menor nas 3 execuções pareadas e com faixas disjuntas: diferença consistente e reprodutível; o mesmo vale, em menor grau, de 512 B a 2 KiB e em 8 KiB ($-5$ a $-10$\,\%). Já de 1 a 32 B a média cai 7 a 8\,\%, mas por uma única execução lenta do contêiner (a 2ª, cerca de 19\,\% abaixo das demais; a 1ª coincide com o nativo em 1\,\%), com faixas sobrepostas: não é robusta (o CV máximo do contêiner, 11,11\,\%, ocorre nessa faixa, em 8 B). Na latência os cenários ficam dentro de cerca de 2\,\% na maioria dos tamanhos; em 256 e 512 B o contêiner é mais rápido ($-8{,}0$ e $-6{,}0$\,\%) em parte porque a 1ª execução nativa foi sistematicamente mais lenta (5 a 14\,\% até 32 KiB, origem do CV de 10,32\,\%), e o $+7{,}2$\,\% em 8 KiB não é robusto (faixas sobrepostas, sinais mistos). Hipóteses, não verificadas, para as diferenças reais: compilações distintas de UCX/MPICH (Spack com otimizações vs.\ \texttt{configure} padrão no HPCCM), glibc/GCC diferentes e limiares de protocolo distintos.
+\textbf{Nativo vs.\ contêiner e consistência.} A partir de 64 KiB, onde a rede é o gargalo, o contêiner fica de 0,06 a 0,53\,\% abaixo do nativo, diferença desprezível. As diferenças aparecem em mensagens pequenas e médias, onde pesa o custo de software por mensagem. Em 256 B o contêiner é 38,9\,\% mais lento, abaixo do nativo nas 3 execuções e com faixas disjuntas, e de 512 B a 2 KiB e em 8 KiB fica 5 a 10\,\% abaixo, também de forma consistente. Já a queda média de 7 a 8\,\% de 1 a 32 B vem de uma única execução lenta do contêiner, que também gera seu coeficiente de variação máximo, de 11,11\,\%, e não é robusta. Na latência os cenários ficam a cerca de 2\,\% um do outro na maioria dos tamanhos; as exceções em 256 B, 512 B e 8 KiB vêm em parte da 1ª execução nativa, 5 a 14\,\% mais lenta até 32 KiB, que explica o coeficiente de variação de 10,32\,\%. Uma hipótese, não verificada, para as diferenças reais é que o contêiner usa o \texttt{configure} padrão do UCX e do MPICH e tem glibc e GCC diferentes, conforme a Tabela~\ref{tab:amb}.
 
-\textbf{Distância ao limite teórico.} O pico ficou só 1,3\,\% abaixo dos 100 Gb/s. Os 100 Gb/s do HDR100 já são a taxa de dados após a codificação de linha, então ela não explica a diferença. Contribuem: cabeçalhos dos pacotes IB (LRH/BTH/ICRC) e créditos de controle de fluxo, sobrecarga de protocolo do MPI/UCX (\emph{handshake} do \emph{rendezvous}), registro de memória e o barramento PCIe. Mensagens pequenas ficam muito longe do limite por causa do custo fixo por mensagem (latência de cerca de 1,9\,$\mu$s).
+\textbf{Distância ao limite teórico.} O pico ficou só 1,3\,\% abaixo dos 100 Gb/s, que já são a taxa de dados após a codificação de linha. A diferença vem dos cabeçalhos dos pacotes IB, dos créditos de controle de fluxo, da sobrecarga de protocolo do MPI e do UCX, do registro de memória e do PCIe. Mensagens pequenas ficam longe do limite pelo custo fixo de cerca de 1,9\,$\mu$s por mensagem.
+
+\section{Conclusão}
+O contêiner, lançado pelo MPICH do host e com a mesma pilha MPICH/UCX/\texttt{rdma-core}, usa a InfiniBand pelo mesmo caminho e tem praticamente o desempenho nativo: 98,2 contra 98,7\,\% dos 100 Gb/s no pico e +1\,\% de latência em 1 B. As diferenças reprodutíveis ficam entre 256 B e 8 KiB; a partir de 64 KiB o custo do contêiner é desprezível. O repositório contém a receita HPCCM em \texttt{container/}, o ambiente Spack em \texttt{spack/}, os scripts PBS em \texttt{run/}, os logs em \texttt{logs/} e o script dos gráficos em \texttt{analysis/}.
 
 \end{document}
